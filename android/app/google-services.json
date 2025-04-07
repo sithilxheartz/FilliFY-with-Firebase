@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "715880578290",
+    "project_id": "fillify-db",
+    "storage_bucket": "fillify-db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715880578290:android:eeeb886bfccf609c2b246b",
+        "android_client_info": {
+          "package_name": "com.example.fillify_with_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAld48fy2FpG0axmSAOQn_Co1pNLtuf6SA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
