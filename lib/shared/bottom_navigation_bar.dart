@@ -1,7 +1,7 @@
 import 'package:fillify_with_firebase/fuel_stock_page.dart';
 import 'package:fillify_with_firebase/management_page.dart';
 import 'package:fillify_with_firebase/oil_shop_page.dart';
-import 'package:fillify_with_firebase/shift_page.dart';
+import 'package:fillify_with_firebase/pages_shift_module/shift_view_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeBar extends StatefulWidget {
@@ -30,6 +30,8 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
     Icons.settings,
   ];
 
+  final List<String> iconNames = ["Shop", "Fuel", "Shifts", "Settings"];
+
   @override
   void initState() {
     super.initState();
@@ -55,13 +57,13 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
 
   double _calculateIndicatorPosition(int index, double width) {
     final segmentWidth = width / icons.length;
-    return segmentWidth * index + (segmentWidth - 50) / 2;
+    return segmentWidth * index +
+        (segmentWidth - 70) / 2; // Adjust the position
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 400),
         transitionBuilder:
@@ -70,15 +72,15 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
         child: _pages[_selectedIndex],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 13),
+        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 15),
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(20),
+            color: Colors.black, // Dark background for the bar
+            borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.15),
+                color: Colors.black.withOpacity(0.3),
                 blurRadius: 15,
                 offset: const Offset(0, 10),
               ),
@@ -96,13 +98,15 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     left: posX,
-                    top: 10,
+                    top: 0,
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 70, // Adjust width of indicator
+                      height: 5, // Small height to look sleek
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white, // Active indicator color
+                        borderRadius: BorderRadius.circular(
+                          30,
+                        ), // Rounded edges
                       ),
                     ),
                   ),
@@ -114,13 +118,29 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
                         onTap: () => _onTapItem(index),
                         child: SizedBox(
                           width: constraints.maxWidth / icons.length,
-                          height: 70,
-                          child: Center(
-                            child: Icon(
-                              icons[index],
-                              size: 36,
-                              color: isSelected ? Colors.black : Colors.white,
-                            ),
+                          height: 75,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                icons[index],
+                                size: 30,
+                                color:
+                                    isSelected ? Colors.white : Colors.white70,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                iconNames[index],
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      isSelected
+                                          ? Colors.white
+                                          : Colors.white70,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
