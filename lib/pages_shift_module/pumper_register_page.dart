@@ -16,27 +16,33 @@ class PumperRegisterPage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _mobileController =
+      TextEditingController(); // New controller for mobile number
 
-  // Submit the registration form and add to pending collection
+  // Submit the registration form and add to the Pumper collection
   void _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       final pumper = Pumper(
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
-        id: '',
+        mobileNumber:
+            _mobileController.text
+                .trim(), // Pass the mobile number to the Pumper object
+        id: '', // Firestore will auto-generate the ID
       );
 
       try {
-        await _userService.addToPendingRegistrations(
+        await _userService.addToPumperCollection(
           pumper,
-        ); // Add user to pending registrations
+        ); // Add directly to the Pumper collection
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration request sent for approval!')),
+          SnackBar(content: Text('Pumper registration completed!')),
         );
         _nameController.clear();
         _emailController.clear();
         _passwordController.clear();
+        _mobileController.clear(); // Clear the mobile number field
       } catch (e) {
         ScaffoldMessenger.of(
           context,
@@ -79,7 +85,6 @@ class PumperRegisterPage extends StatelessWidget {
                       "Fill in the details below to register as a pumper.",
                       style: TextStyle(color: Colors.white70),
                     ),
-
                     Divider(),
                   ],
                 ),
@@ -90,11 +95,9 @@ class PumperRegisterPage extends StatelessWidget {
                 controller: _nameController,
                 labelText: "Enter your name (e.g. Kasun)",
                 validator: (value) {
-                  // Check if the name is empty
                   if (value?.isEmpty ?? true) {
                     return 'Please enter your name';
                   }
-
                   // Check for a minimum and maximum length (e.g., between 2 and 50 characters)
                   if ((value?.length ?? 0) < 4) {
                     return 'Name must be at least 4 characters long';
@@ -107,7 +110,6 @@ class PumperRegisterPage extends StatelessWidget {
                   if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value!)) {
                     return 'Username cannot contain spaces';
                   }
-
                   return null;
                 },
               ),
@@ -117,11 +119,9 @@ class PumperRegisterPage extends StatelessWidget {
                 isPassword: false,
                 labelText: "Enter your Email",
                 validator: (value) {
-                  // Check if value is empty
                   if (value?.isEmpty ?? true) {
                     return 'Please enter your email';
                   }
-
                   // Regular expression for basic email format validation
                   final emailRegExp = RegExp(
                     r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -131,7 +131,6 @@ class PumperRegisterPage extends StatelessWidget {
                   if (!emailRegExp.hasMatch(value!)) {
                     return 'Please enter a valid email address';
                   }
-
                   return null;
                 },
               ),
@@ -141,7 +140,6 @@ class PumperRegisterPage extends StatelessWidget {
                 controller: _passwordController,
                 labelText: "Enter Password",
                 validator: (value) {
-                  // Check if the password is empty
                   if (value?.isEmpty ?? true) {
                     return 'Please enter your password';
                   }
@@ -170,24 +168,32 @@ class PumperRegisterPage extends StatelessWidget {
                   if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
                     return 'Password must contain at least one special character';
                   }
-
                   return null;
                 },
               ),
+              SignInInput(
+                heading: "Mobile Number *", // New field for mobile number
+                isPassword: false,
+                controller: _mobileController,
+                labelText: "Mobile Number (e.g. 07X 6X7 XX67)",
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter your mobile number';
+                  }
+                  // Optional: Validate mobile number format
+                  if (!RegExp(r'^[0-9]{10}$').hasMatch(value!)) {
+                    return 'Please enter a valid 10-digit mobile number';
+                  }
+                  return null;
+                },
+              ),
+
               SizedBox(height: 10),
-              Center(
-                child: Text(
-                  "*Admins will review your request within 24 hours.",
-                  // style: TextStyle(color: Colors.blue),
-                ),
+              CustomButton(
+                labelText: "Register",
+                onPressed: () => _submit(context),
               ),
-              SizedBox(height: 5),
-              Center(
-                child: CustomButton(
-                  labelText: "Register",
-                  onPressed: () => _submit(context),
-                ),
-              ),
+              SizedBox(height: 15),
             ],
           ),
         ),

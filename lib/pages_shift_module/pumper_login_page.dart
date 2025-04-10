@@ -166,40 +166,13 @@ class _PumperSignInPageState extends State<PumperSignInPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               _isLoading
                   ? const CircularProgressIndicator()
                   : CustomButton(
                     labelText: "Login",
                     onPressed: () => _login(context),
                   ),
-              SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have an account?"),
-                  SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) =>
-                                  PumperRegisterPage(), // Register page navigation
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "REGISTER",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),

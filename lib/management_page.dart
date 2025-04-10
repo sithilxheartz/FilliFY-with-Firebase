@@ -1,4 +1,4 @@
-import 'package:fillify_with_firebase/pages_shift_module/pumper_register_request_approve_page.dart';
+import 'package:fillify_with_firebase/pages_shift_module/pumper_register_page.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/menu_button.dart';
 import 'package:fillify_with_firebase/utils/colors.dart';
@@ -18,17 +18,17 @@ class ManagementPage extends StatelessWidget {
             MenuButton(
               labelText: "Pumper Register Requests",
               icon: Icons.person_add,
-              route: AdminApprovePage(),
+              route: PumperRegisterPage(),
             ),
             MenuButton(
               labelText: "Button 2",
               icon: Icons.add,
-              route: AdminApprovePage(),
+              route: PumperRegisterPage(),
             ),
             MenuButton(
               labelText: "Button 3",
               icon: Icons.add,
-              route: AdminApprovePage(),
+              route: PumperRegisterPage(),
             ),
           ],
         ),

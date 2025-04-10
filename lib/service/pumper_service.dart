@@ -7,11 +7,6 @@ class PumperService {
   final CollectionReference pumperCollection = FirebaseFirestore.instance
       .collection("Pumpers");
 
-  final CollectionReference pendingCollection = FirebaseFirestore.instance
-      .collection("pendingRegistrations");
-
-  get pumpers => null;
-
   // Method to hash the password
   String _hashPassword(String password) {
     final bytes = utf8.encode(password); // Convert password to bytes
@@ -19,72 +14,28 @@ class PumperService {
     return digest.toString(); // Return hashed password
   }
 
-  // Add user to the pending registration collection
-  Future<void> addToPendingRegistrations(Pumper pumper) async {
+  // 🔹 Directly add a pumper to the 'Pumper' collection
+  Future<void> addToPumperCollection(Pumper pumper) async {
     try {
       // Hash the password before storing it
       final hashedPassword = _hashPassword(pumper.password);
 
-      // Create a map with the user data
+      // Create a map with the pumper data, including mobile number
       final Map<String, dynamic> data = {
         'name': pumper.name,
         'email': pumper.email,
         'password': hashedPassword,
-        'status': 'pending', // Add status as 'pending' initially
+        'mobileNumber': pumper.mobileNumber, // Add mobile number to the map
       };
 
-      // Add the user to the pending collection
-      final DocumentReference docRef = await pendingCollection.add(data);
+      // Debugging: Check what is being added to Firestore
+      print("Adding data to Firestore: $data");
 
-      // Optionally update the document with an id (not strictly necessary)
-      await docRef.update({'id': docRef.id});
-      print("Registration request sent. Awaiting approval.");
-    } catch (error) {
-      print("Error creating pending registration: $error");
-    }
-  }
-
-  // Admin approves the registration and moves the user to the main collection
-  Future<void> approveUser(String pendingId) async {
-    try {
-      // Get the pending user data
-      final pendingDoc = await pendingCollection.doc(pendingId).get();
-
-      if (pendingDoc.exists) {
-        // Create a Pumper object with the data
-        final pumperData = pendingDoc.data() as Map<String, dynamic>;
-        final pumper = Pumper(
-          name: pumperData['name'],
-          email: pumperData['email'],
-          password: pumperData['password'],
-          id: pendingDoc.id,
-        );
-
-        // Add the user to the main collection
-        await pumperCollection.add({
-          'name': pumper.name,
-          'email': pumper.email,
-          'password': pumper.password,
-        });
-
-        // Remove from the pending collection
-        await pendingCollection.doc(pendingId).delete();
-        print("User approved and moved to active users.");
-      } else {
-        print("Pending user not found.");
-      }
+      // Add the pumper to the collection
+      await pumperCollection.add(data);
+      print("Pumper registration added directly to the Pumper collection.");
     } catch (e) {
-      print("Failed to approve user: $e");
-    }
-  }
-
-  // Admin declines the registration request
-  Future<void> declineUser(String pendingId) async {
-    try {
-      await pendingCollection.doc(pendingId).delete();
-      print("User registration request declined.");
-    } catch (e) {
-      print("Failed to decline user: $e");
+      throw Exception("Error adding pumper to collection: $e");
     }
   }
 
@@ -113,20 +64,5 @@ class PumperService {
     final snapshot =
         await pumperCollection.where('email', isEqualTo: email).get();
     return snapshot.docs.isNotEmpty;
-  }
-
-  // 🔹 Get all pending registration requests (admin side)
-  Stream<List<Pumper>> getPendingRegistrations() {
-    return pendingCollection.snapshots().map((querySnapshot) {
-      return querySnapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return Pumper(
-          name: data['name'],
-          email: data['email'],
-          password: data['password'],
-          id: doc.id,
-        );
-      }).toList();
-    });
   }
 }
