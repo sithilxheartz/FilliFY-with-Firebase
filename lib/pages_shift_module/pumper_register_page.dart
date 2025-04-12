@@ -1,4 +1,4 @@
-import 'package:fillify_with_firebase/pages_shift_module/pumper_login_page.dart';
+import 'package:fillify_with_firebase/pages_shift_module/pumper_login_shift.dart';
 import 'package:fillify_with_firebase/pages_shift_module/shift_view_page.dart';
 import 'package:fillify_with_firebase/service/pumper_service.dart';
 import 'package:fillify_with_firebase/models/pumper_model.dart';
@@ -54,8 +54,7 @@ class PumperRegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(backgroundColor: Colors.black),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
@@ -74,7 +73,7 @@ class PumperRegisterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Register as a Pumper",
+                      "Register New Pumper",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,

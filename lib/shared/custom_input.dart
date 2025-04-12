@@ -20,7 +20,7 @@ class CustomInput extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
-          labelText: 'Email',
+          labelText: labelText,
           labelStyle: TextStyle(color: Colors.white),
           hintText: labelText,
           hintStyle: TextStyle(color: Colors.grey[500]),

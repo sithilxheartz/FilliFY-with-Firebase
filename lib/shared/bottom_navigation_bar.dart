@@ -1,8 +1,9 @@
+import 'package:fillify_with_firebase/utils/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/fuel_stock_page.dart';
 import 'package:fillify_with_firebase/management_page.dart';
 import 'package:fillify_with_firebase/oil_shop_page.dart';
 import 'package:fillify_with_firebase/pages_shift_module/shift_view_page.dart';
-import 'package:flutter/material.dart';
 
 class HomeBar extends StatefulWidget {
   const HomeBar({super.key});
@@ -16,9 +17,10 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
-  static const List<Widget> _pages = [
+  // Updated the _pages list without using const.
+  static final List<Widget> _pages = [
     ShopPage(),
-    FuelStockPage(),
+    FuelStockPage(), // No const here, dynamic widget
     ShiftPage(),
     ManagementPage(),
   ];
@@ -72,19 +74,15 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
         child: _pages[_selectedIndex],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 15),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: Colors.black, // Dark background for the bar
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 15,
-                offset: const Offset(0, 10),
-              ),
-            ],
+            color: primaryColor.withOpacity(0.1), // Dark background for the bar
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
+            ),
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -101,12 +99,10 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
                     top: 0,
                     child: Container(
                       width: 70, // Adjust width of indicator
-                      height: 5, // Small height to look sleek
+                      height: 3, // Small height to look sleek
                       decoration: BoxDecoration(
                         color: Colors.white, // Active indicator color
-                        borderRadius: BorderRadius.circular(
-                          30,
-                        ), // Rounded edges
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
                   ),
@@ -124,15 +120,15 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
                             children: [
                               Icon(
                                 icons[index],
-                                size: 30,
+                                size: 29,
                                 color:
                                     isSelected ? Colors.white : Colors.white70,
                               ),
-                              const SizedBox(height: 5),
+
                               Text(
                                 iconNames[index],
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                   color:
                                       isSelected

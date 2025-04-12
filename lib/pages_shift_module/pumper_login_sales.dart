@@ -1,18 +1,18 @@
-import 'package:fillify_with_firebase/pages_shift_module/pumper_register_page.dart';
 import 'package:fillify_with_firebase/service/pumper_service.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
 import 'package:fillify_with_firebase/pages_shift_module/shift_add_page.dart';
+import 'package:fillify_with_firebase/tank_add_sales.dart';
 import 'package:flutter/material.dart';
 
-class PumperSignInPage extends StatefulWidget {
-  const PumperSignInPage({super.key});
+class PumperSignInSales extends StatefulWidget {
+  const PumperSignInSales({super.key});
 
   @override
-  State<PumperSignInPage> createState() => _PumperSignInPageState();
+  State<PumperSignInSales> createState() => _PumperSignInShiftsState();
 }
 
-class _PumperSignInPageState extends State<PumperSignInPage> {
+class _PumperSignInShiftsState extends State<PumperSignInSales> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -41,7 +41,7 @@ class _PumperSignInPageState extends State<PumperSignInPage> {
         // Navigate to HomePage after successful login
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ShiftAddPage(pumper: user)),
+          MaterialPageRoute(builder: (context) => AddSalesPage(pumper: user)),
         );
       } else {
         ScaffoldMessenger.of(
@@ -98,7 +98,7 @@ class _PumperSignInPageState extends State<PumperSignInPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      "Please verify yourself before booking your shifts.",
+                      "Please verify yourself before adding fuel sales.",
                       style: TextStyle(color: Colors.white70),
                     ),
                     Divider(),

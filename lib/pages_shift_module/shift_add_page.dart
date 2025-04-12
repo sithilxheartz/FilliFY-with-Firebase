@@ -4,6 +4,7 @@ import 'package:fillify_with_firebase/models/shift_model.dart';
 import 'package:fillify_with_firebase/service/shift_service.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/snack_bar.dart';
+import 'package:fillify_with_firebase/shared/toggle_button.dart';
 import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -115,8 +116,8 @@ class _ShiftAddPageState extends State<ShiftAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black),
-      backgroundColor: Colors.black87,
+      appBar: AppBar(),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -160,7 +161,7 @@ class _ShiftAddPageState extends State<ShiftAddPage> {
                   "Fill in the details below to book a shift schedule.",
                   style: TextStyle(fontSize: 14, color: Colors.white70),
                 ),
-                Divider(color: Colors.white54, height: 20),
+                Divider(),
 
                 // Date selection
                 ValueListenableBuilder<DateTime>(
@@ -251,11 +252,9 @@ class _ShiftAddPageState extends State<ShiftAddPage> {
                 SizedBox(height: 10),
 
                 // Submit button
-                Center(
-                  child: CustomButton(
-                    labelText: "Add Schedule",
-                    onPressed: () => _submitForm(context),
-                  ),
+                CustomButton(
+                  labelText: "Add Schedule",
+                  onPressed: () => _submitForm(context),
                 ),
               ],
             ),

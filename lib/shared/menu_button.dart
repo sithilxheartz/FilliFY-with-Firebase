@@ -43,12 +43,13 @@ class MenuButton extends StatelessWidget {
               Icon(
                 icon, // Custom icon
                 color: Colors.white,
+                size: 25,
               ),
               const SizedBox(width: 8),
               Text(
                 labelText, // Custom text
                 style: const TextStyle(
-                  fontSize: 15.0,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
