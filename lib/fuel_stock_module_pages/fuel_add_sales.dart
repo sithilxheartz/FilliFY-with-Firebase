@@ -1,7 +1,7 @@
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/tank_model.dart';
-import 'package:fillify_with_firebase/tank_service.dart';
+import 'package:fillify_with_firebase/models/tank_model.dart';
+import 'package:fillify_with_firebase/service/tank_service.dart';
 import 'package:fillify_with_firebase/models/pumper_model.dart';
 
 class AddSalesPage extends StatefulWidget {

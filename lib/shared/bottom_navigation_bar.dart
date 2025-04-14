@@ -1,9 +1,8 @@
-import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/fuel_stock_page.dart';
+import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_stock_page.dart';
 import 'package:fillify_with_firebase/management_page.dart';
 import 'package:fillify_with_firebase/oil_shop_page.dart';
-import 'package:fillify_with_firebase/pages_shift_module/shift_view_page.dart';
+import 'package:fillify_with_firebase/shift_module_pages/shift_view_page.dart';
 
 class HomeBar extends StatefulWidget {
   const HomeBar({super.key});
@@ -74,15 +73,16 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
         child: _pages[_selectedIndex],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+        // padding: const EdgeInsets.only(left: 15, right: 15, bottom: 0),
+        padding: const EdgeInsets.only(left: 0, right: 0, bottom: 0),
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.1), // Dark background for the bar
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-            ),
+            //  color: primaryColor.withOpacity(0.1), // Dark background for the bar
+            // borderRadius: BorderRadius.only(
+            //   topLeft: Radius.circular(15),
+            //   topRight: Radius.circular(15),
+            // ),
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {

@@ -1,10 +1,7 @@
-import 'package:fillify_with_firebase/pages_shift_module/pumper_login_shift.dart';
-import 'package:fillify_with_firebase/pages_shift_module/shift_view_page.dart';
 import 'package:fillify_with_firebase/service/pumper_service.dart';
 import 'package:fillify_with_firebase/models/pumper_model.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
-import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class PumperRegisterPage extends StatelessWidget {

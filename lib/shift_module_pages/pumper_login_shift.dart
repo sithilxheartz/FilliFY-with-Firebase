@@ -1,18 +1,17 @@
 import 'package:fillify_with_firebase/service/pumper_service.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
-import 'package:fillify_with_firebase/pages_shift_module/shift_add_page.dart';
-import 'package:fillify_with_firebase/tank_add_sales.dart';
+import 'package:fillify_with_firebase/shift_module_pages/shift_add_page.dart';
 import 'package:flutter/material.dart';
 
-class PumperSignInSales extends StatefulWidget {
-  const PumperSignInSales({super.key});
+class PumperSignInShifts extends StatefulWidget {
+  const PumperSignInShifts({super.key});
 
   @override
-  State<PumperSignInSales> createState() => _PumperSignInShiftsState();
+  State<PumperSignInShifts> createState() => _PumperSignInShiftsState();
 }
 
-class _PumperSignInShiftsState extends State<PumperSignInSales> {
+class _PumperSignInShiftsState extends State<PumperSignInShifts> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -41,7 +40,7 @@ class _PumperSignInShiftsState extends State<PumperSignInSales> {
         // Navigate to HomePage after successful login
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AddSalesPage(pumper: user)),
+          MaterialPageRoute(builder: (context) => ShiftAddPage(pumper: user)),
         );
       } else {
         ScaffoldMessenger.of(
@@ -60,7 +59,7 @@ class _PumperSignInShiftsState extends State<PumperSignInSales> {
           topRight: Radius.circular(30),
         ),
         image: DecorationImage(
-          image: AssetImage("assets/img3.png"),
+          image: AssetImage("assets/img2s.png"),
           fit: BoxFit.cover,
         ),
       ),
@@ -98,7 +97,7 @@ class _PumperSignInShiftsState extends State<PumperSignInSales> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      "Please verify yourself before adding fuel sales.",
+                      "Please verify yourself before booking your shifts.",
                       style: TextStyle(color: Colors.white70),
                     ),
                     Divider(),

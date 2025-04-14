@@ -1,6 +1,5 @@
-import 'package:fillify_with_firebase/tank_model.dart';
-import 'package:fillify_with_firebase/tank_service.dart';
-import 'package:fillify_with_firebase/utils/colors.dart';
+import 'package:fillify_with_firebase/models/tank_model.dart';
+import 'package:fillify_with_firebase/service/tank_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -41,103 +40,103 @@ class _FuelStockPageState extends State<FuelStockPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10),
+                          Text(
+                            "Real-time Fuel Stock",
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          //   const SizedBox(height: 5),
+                          Text(
+                            "Monitor Real-time fuel stocks at a glance.",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 13.5,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Divider(),
+                          SizedBox(height: 5),
+                        ],
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Real-time Fuel Stock",
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                    // Dropdown to select tank (will allow user to select a tank to filter or view all tanks)
+                    DropdownButton<String>(
+                      hint: Text("Select Tank", style: TextStyle(fontSize: 18)),
+                      value: _selectedTankId,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedTankId = newValue;
+                        });
+                        if (newValue != null) {
+                          _fetchTankDetails(
+                            newValue,
+                          ); // Fetch more details if needed
+                        }
+                      },
+                      items: [
+                        // Adding "All Tanks" option
+                        DropdownMenuItem<String>(
+                          value: null, // Null value will represent "All Tanks"
+                          child: Text("All Fuel Types    "),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "Monitor Real-time fuel stocks at a glance.",
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 5),
-
-                // Dropdown to select tank (will allow user to select a tank to filter or view all tanks)
-                DropdownButton<String>(
-                  hint: Text("Select Tank", style: TextStyle(fontSize: 18)),
-                  value: _selectedTankId,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedTankId = newValue;
-                    });
-                    if (newValue != null) {
-                      _fetchTankDetails(
-                        newValue,
-                      ); // Fetch more details if needed
-                    }
-                  },
-                  items: [
-                    // Adding "All Tanks" option
-                    DropdownMenuItem<String>(
-                      value: null, // Null value will represent "All Tanks"
-                      child: Text("All Fuel Types    "),
+                        // Add tanks from the fetched list
+                        ..._fuelTanks.map<DropdownMenuItem<String>>((
+                          FuelTank tank,
+                        ) {
+                          return DropdownMenuItem<String>(
+                            value: tank.id,
+                            // child: Text("${tank.fuelType} - ${tank.id}"),
+                            child: Text("${tank.fuelType}"),
+                          );
+                        }).toList(),
+                      ],
                     ),
-                    // Add tanks from the fetched list
-                    ..._fuelTanks.map<DropdownMenuItem<String>>((
-                      FuelTank tank,
-                    ) {
-                      return DropdownMenuItem<String>(
-                        value: tank.id,
-                        // child: Text("${tank.fuelType} - ${tank.id}"),
-                        child: Text("${tank.fuelType}"),
-                      );
-                    }).toList(),
+                    SizedBox(height: 5),
+
+                    // Display all the tanks or filter by selected tank
+                    ..._fuelTanks
+                        .where(
+                          (tank) =>
+                              _selectedTankId == null ||
+                              tank.id == _selectedTankId,
+                        ) // Show all or filtered tanks
+                        .map((tank) {
+                          final fuelPercentage =
+                              ((tank.currentLevel / tank.capacity) * 100).clamp(
+                                0.0,
+                                100.0,
+                              );
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: FuelTankPieChart(
+                              tankId: tank.id,
+                              fuelPercentage: fuelPercentage,
+                              fuelType: tank.fuelType,
+                              capacity: tank.capacity,
+                              currentLevel: tank.currentLevel,
+                            ),
+                          );
+                        })
+                        .toList(),
                   ],
                 ),
-                SizedBox(height: 10),
-
-                // Display all the tanks or filter by selected tank
-                ..._fuelTanks
-                    .where(
-                      (tank) =>
-                          _selectedTankId == null || tank.id == _selectedTankId,
-                    ) // Show all or filtered tanks
-                    .map((tank) {
-                      final fuelPercentage =
-                          ((tank.currentLevel / tank.capacity) * 100).clamp(
-                            0.0,
-                            100.0,
-                          );
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: FuelTankPieChart(
-                          tankId: tank.id,
-                          fuelPercentage: fuelPercentage,
-                          fuelType: tank.fuelType,
-                          capacity: tank.capacity,
-                          currentLevel: tank.currentLevel,
-                        ),
-                      );
-                    })
-                    .toList(),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

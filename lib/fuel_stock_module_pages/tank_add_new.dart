@@ -1,5 +1,5 @@
-import 'package:fillify_with_firebase/tank_model.dart';
-import 'package:fillify_with_firebase/tank_service.dart';
+import 'package:fillify_with_firebase/models/tank_model.dart';
+import 'package:fillify_with_firebase/service/tank_service.dart';
 import 'package:flutter/material.dart';
 
 class NewTankPage extends StatefulWidget {

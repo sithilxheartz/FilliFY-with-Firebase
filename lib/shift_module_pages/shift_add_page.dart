@@ -4,8 +4,6 @@ import 'package:fillify_with_firebase/models/shift_model.dart';
 import 'package:fillify_with_firebase/service/shift_service.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/snack_bar.dart';
-import 'package:fillify_with_firebase/shared/toggle_button.dart';
-import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ShiftAddPage extends StatefulWidget {

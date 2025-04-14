@@ -1,4 +1,3 @@
-import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
