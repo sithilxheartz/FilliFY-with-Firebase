@@ -47,18 +47,18 @@ class _ShiftPageState extends State<ShiftPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
-                height: 90,
+                height: 100,
                 decoration: BoxDecoration(
                   color: primaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
                   ),
                 ),
                 child: Column(
@@ -150,32 +150,32 @@ class _ShiftPageState extends State<ShiftPage> {
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, // Display 2 cards per row
                                 crossAxisSpacing: 10,
-                                mainAxisSpacing: 0,
+                                mainAxisSpacing: 5,
                                 childAspectRatio: 1.3,
                               ),
                           itemCount: shifts.length,
                           itemBuilder: (context, index) {
                             final shift = shifts[index];
                             return Card(
-                              color:
-                                  Colors
-                                      .black12, // Dark background for the card
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
-                                side: BorderSide(color: mainColor, width: 1),
+                                // side: BorderSide(
+                                //    color: primaryColor.withOpacity(0.3),
+                                //   width: 1,
+                                // ),
                               ),
-                              elevation: 10,
+                              elevation: 5,
                               margin: const EdgeInsets.only(bottom: 10),
                               child: Container(
                                 padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  gradient: LinearGradient(
-                                    colors: [mainColor, Colors.white38],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                ),
+                                // decoration: BoxDecoration(
+                                //   borderRadius: BorderRadius.circular(18),
+                                //   gradient: LinearGradient(
+                                //     colors: [mainColor, Colors.white38],
+                                //     begin: Alignment.topLeft,
+                                //     end: Alignment.bottomRight,
+                                //   ),
+                                // ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

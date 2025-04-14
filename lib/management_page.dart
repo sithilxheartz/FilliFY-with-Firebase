@@ -14,37 +14,75 @@ class ManagementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Not Completed")),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
+        child: GridView.count(
+          crossAxisCount: 2, // Two items per row
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          childAspectRatio: 1.3,
           children: [
-            MenuButton(
-              labelText: "Register New Pumper",
+            _buildMenuButton(
+              context,
+              label: "Add New Pumper",
               icon: Icons.person_add,
               route: PumperRegisterPage(),
             ),
-            MenuButton(
-              labelText: "Add New Stock",
+            _buildMenuButton(
+              context,
+              label: "Add New Stock",
               icon: Icons.add_business_outlined,
               route: AddStockPage(),
             ),
-            MenuButton(
-              labelText: "add new tanks",
-              icon: Icons.add,
+            _buildMenuButton(
+              context,
+              label: "Add New Tank (To Remove)",
+              icon: Icons.oil_barrel,
               route: NewTankPage(),
             ),
-            MenuButton(
-              labelText: "stock vieewww",
-              icon: Icons.add,
-              route: FuelStockPage(),
+            _buildMenuButton(
+              context,
+              label: "Reports",
+              icon: Icons.bar_chart,
+              route: NewTankPage(),
             ),
-            // MenuButton(
-            //   labelText: "add salessssssssss",
-            //   icon: Icons.add,
-            //   route: AddSalesPage(),
-            // ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuButton(
+    BuildContext context, {
+    required String label,
+    required IconData icon,
+    required Widget route,
+  }) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => route),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 40, color: primaryColor),
+              SizedBox(height: 10),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );

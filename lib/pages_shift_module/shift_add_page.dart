@@ -128,7 +128,7 @@ class _ShiftAddPageState extends State<ShiftAddPage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/img1.png"),
+                  child: Image.asset("assets/shift.png"),
                 ),
                 SizedBox(height: 15),
                 Row(

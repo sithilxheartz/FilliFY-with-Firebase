@@ -28,11 +28,11 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
   final List<IconData> icons = [
     Icons.store,
     Icons.local_gas_station,
-    Icons.calendar_month_sharp,
+    Icons.person_2,
     Icons.settings,
   ];
 
-  final List<String> iconNames = ["Shop", "Fuel", "Shifts", "Settings"];
+  final List<String> iconNames = ["Shop", "Fuel", "Pumper", "Settings"];
 
   @override
   void initState() {
