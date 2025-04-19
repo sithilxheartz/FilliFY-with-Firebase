@@ -1,4 +1,4 @@
-import 'package:fillify_with_firebase/shift_module_pages/pumper_login_sales.dart';
+import 'package:fillify_with_firebase/fuel_stock_module_pages/pumper_login_sales.dart';
 import 'package:fillify_with_firebase/shift_module_pages/pumper_login_shift.dart';
 import 'package:fillify_with_firebase/models/shift_model.dart';
 import 'package:fillify_with_firebase/service/shift_service.dart';

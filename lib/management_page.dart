@@ -1,9 +1,5 @@
-import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_stock_page.dart';
 import 'package:fillify_with_firebase/shift_module_pages/pumper_register_page.dart';
-import 'package:fillify_with_firebase/shared/custom_button.dart';
-import 'package:fillify_with_firebase/shared/menu_button.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/tank_add_new.dart';
-import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_add_sales.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_add_stock.dart';
 import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +10,7 @@ class ManagementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text("management_page")),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: GridView.count(

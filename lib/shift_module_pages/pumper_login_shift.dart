@@ -59,7 +59,7 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
           topRight: Radius.circular(30),
         ),
         image: DecorationImage(
-          image: AssetImage("assets/img2s.png"),
+          image: AssetImage("assets/img2.png"),
           fit: BoxFit.cover,
         ),
       ),

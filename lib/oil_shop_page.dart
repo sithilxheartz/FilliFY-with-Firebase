@@ -5,6 +5,9 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("oilshop")), body: Column());
+    return Scaffold(
+      appBar: AppBar(title: Text("oil_shop_page")),
+      body: Column(),
+    );
   }
 }
