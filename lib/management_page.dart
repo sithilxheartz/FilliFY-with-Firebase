@@ -1,3 +1,4 @@
+import 'package:fillify_with_firebase/report_fuel_sales.dart';
 import 'package:fillify_with_firebase/shift_module_pages/pumper_register_page.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/tank_add_new.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_add_stock.dart';
@@ -39,9 +40,9 @@ class ManagementPage extends StatelessWidget {
             ),
             _buildMenuButton(
               context,
-              label: "Reports",
+              label: "Fuel Sales Report",
               icon: Icons.bar_chart,
-              route: NewTankPage(),
+              route: FuelSalesReportPage(),
             ),
           ],
         ),

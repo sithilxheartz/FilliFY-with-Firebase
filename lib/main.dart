@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Study Planner Application",
+      title: "Filling Station Mobile Apllication",
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
         brightness: Brightness.dark,
