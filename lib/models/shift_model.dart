@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Shift {
   final String id;
@@ -24,6 +25,12 @@ class Shift {
       shiftType: json['shiftType'] ?? '',
       date: (json['date'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
+  }
+  // Method to format the date into a string without time
+  String getFormattedDate() {
+    return DateFormat(
+      'yyyy-MM-dd',
+    ).format(date); // Format the date to only show 'yyyy-MM-dd'
   }
 
   // convert the product model to a firebase document

@@ -42,7 +42,7 @@
 //   }
 // }
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fillify_with_firebase/report_fuel_stock_model.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock_model.dart';
 
 class FuelStockService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

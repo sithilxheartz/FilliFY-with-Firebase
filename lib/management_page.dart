@@ -1,4 +1,5 @@
-import 'package:fillify_with_firebase/report_fuel_stock.dart';
+import 'package:fillify_with_firebase/report_shift.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_sales.dart';
 import 'package:fillify_with_firebase/shift_module_pages/pumper_register_page.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/tank_add_new.dart';
@@ -50,6 +51,12 @@ class ManagementPage extends StatelessWidget {
               label: "Fuel Stock Report",
               icon: Icons.bar_chart,
               route: FuelStockReportPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Shift Report",
+              icon: Icons.bar_chart,
+              route: ShiftReportPage(),
             ),
           ],
         ),

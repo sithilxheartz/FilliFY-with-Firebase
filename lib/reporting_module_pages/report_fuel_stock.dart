@@ -317,8 +317,8 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/report_fuel_stock_service.dart';
-import 'package:fillify_with_firebase/report_fuel_stock_model.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock_service.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
