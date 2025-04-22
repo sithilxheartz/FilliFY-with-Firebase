@@ -45,7 +45,50 @@ class _AddStockPageState extends State<AddStockPage> {
     });
   }
 
-  // Handle the form submission
+  // // Handle the form submission
+  // void _submitStock() async {
+  //   if (_selectedTankId == null || _addedQuantity <= 0) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Please select a tank and enter a valid quantity.'),
+  //       ),
+  //     );
+  //     return;
+  //   }
+
+  //   if (_addedQuantity > (_availableSpace ?? 0.0)) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Not enough available space in this tank.')),
+  //     );
+  //     return;
+  //   }
+
+  //   try {
+  //     await _fuelTankService.addFuelStockRecord(
+  //       _selectedTankId!,
+  //       _addedQuantity,
+  //     );
+  //     // Refresh the current stock and available space after adding new stock
+  //     _fetchTankDetails(_selectedTankId!);
+
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text('Fuel stock added successfully!')));
+
+  //     // Clear the input fields and navigate back to the previous page
+  //     setState(() {
+  //       _selectedTankId = null;
+  //       _addedQuantity = 0.0;
+  //     });
+
+  //     // Navigator.pop(context); // Navigate back to the previous page
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text('Error adding fuel stock: $e')));
+  //   }
+  // }
+
   void _submitStock() async {
     if (_selectedTankId == null || _addedQuantity <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -65,8 +108,8 @@ class _AddStockPageState extends State<AddStockPage> {
 
     try {
       await _fuelTankService.addFuelStockRecord(
-        _selectedTankId!,
-        _addedQuantity,
+        _selectedTankId!, // Tank ID
+        _addedQuantity, // Stock Quantity
       );
       // Refresh the current stock and available space after adding new stock
       _fetchTankDetails(_selectedTankId!);

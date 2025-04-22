@@ -181,7 +181,7 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
     await file.writeAsBytes(await pdf.save());
     Printing.sharePdf(
       bytes: await pdf.save(),
-      filename: "Fuel_Sales_Report.pdf",
+      filename: "Fuel-Sales-Report.pdf",
     );
   }
 
