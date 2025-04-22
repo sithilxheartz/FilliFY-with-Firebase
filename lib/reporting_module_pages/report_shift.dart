@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/report_shift_service.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_shift_service.dart';
 import 'package:fillify_with_firebase/models/shift_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';

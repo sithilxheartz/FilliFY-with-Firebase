@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_stock_page.dart';
 import 'package:fillify_with_firebase/management_page.dart';
-import 'package:fillify_with_firebase/oil_shop_page.dart';
+import 'package:fillify_with_firebase/product_menu.dart';
 import 'package:fillify_with_firebase/shift_module_pages/shift_view_page.dart';
 
 class HomeBar extends StatefulWidget {
@@ -18,7 +18,7 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
 
   // Updated the _pages list without using const.
   static final List<Widget> _pages = [
-    ShopPage(),
+    ProductMenuPage(),
     FuelStockPage(), // No const here, dynamic widget
     ShiftPage(),
     ManagementPage(),

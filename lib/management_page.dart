@@ -1,4 +1,5 @@
-import 'package:fillify_with_firebase/report_shift.dart';
+import 'package:fillify_with_firebase/product-add_new.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_shift.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_sales.dart';
 import 'package:fillify_with_firebase/shift_module_pages/pumper_register_page.dart';
@@ -33,6 +34,12 @@ class ManagementPage extends StatelessWidget {
               label: "Add New Stock",
               icon: Icons.add_business_outlined,
               route: AddStockPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add New Product",
+              icon: Icons.add_business_outlined,
+              route: AddProductPage(),
             ),
             _buildMenuButton(
               context,
