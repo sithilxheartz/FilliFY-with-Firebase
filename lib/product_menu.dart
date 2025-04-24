@@ -1,7 +1,9 @@
+import 'package:fillify_with_firebase/cart.dart';
 import 'package:fillify_with_firebase/product_model.dart';
 import 'package:fillify_with_firebase/product_service.dart';
-import 'package:fillify_with_firebase/shared/custom_button.dart';
+import 'package:fillify_with_firebase/cart_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fillify_with_firebase/shared/custom_button.dart';
 
 class ProductMenuPage extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class ProductMenuPage extends StatefulWidget {
 
 class _ProductMenuPageState extends State<ProductMenuPage> {
   final ProductService _productService = ProductService();
+  final CartService _cartService = CartService();
   List<Product> _products = [];
   String _searchQuery = '';
 
@@ -35,30 +38,45 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
     });
   }
 
+  // Show cart page when shopping cart icon is tapped
+  void _navigateToCart(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CartPage(cartService: _cartService),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          title: Text("Product Menu", style: TextStyle(fontSize: 24)),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () => _navigateToCart(context), // Navigate to CartPage
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 10),
-                  Text(
-                    "FilliFY Oil Shop",
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
-                  //   const SizedBox(height: 5),
-                  Text(
-                    "Explore our premimum product range.",
-                    style: TextStyle(color: Colors.white70, fontSize: 13.5),
-                  ),
-                  SizedBox(height: 20),
-                ],
+              SizedBox(height: 10),
+              Text(
+                "FilliFY Oil Shop",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
+              Text(
+                "Explore our premium product range.",
+                style: TextStyle(color: Colors.white70, fontSize: 13.5),
+              ),
+              SizedBox(height: 20),
+              // Search Bar
               TextField(
                 onChanged: _filterProducts,
                 decoration: InputDecoration(
@@ -105,7 +123,10 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
                               return SizedBox.shrink();
                             }
 
-                            return ProductCard(product: product);
+                            return ProductCard(
+                              product: product,
+                              cartService: _cartService,
+                            );
                           },
                         ),
               ),
@@ -119,8 +140,13 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
 
 class ProductCard extends StatelessWidget {
   final Product product;
+  final CartService cartService;
 
-  const ProductCard({Key? key, required this.product}) : super(key: key);
+  const ProductCard({
+    Key? key,
+    required this.product,
+    required this.cartService,
+  }) : super(key: key);
 
   // Show product details in Modal Bottom Sheet
   void _showProductDetails(BuildContext context) {
@@ -128,7 +154,7 @@ class ProductCard extends StatelessWidget {
       context: context,
       isScrollControlled: true, // Allows the modal to be scrollable
       builder: (BuildContext context) {
-        return ProductDetailModal(product: product);
+        return ProductDetailModal(product: product, cartService: cartService);
       },
     );
   }
@@ -189,7 +215,9 @@ class ProductCard extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.add_shopping_cart, size: 20),
                         onPressed: () {
-                          // Add to cart functionality here
+                          cartService.addProduct(
+                            product,
+                          ); // Add to cart functionality
                         },
                       ),
                     ],
@@ -206,8 +234,13 @@ class ProductCard extends StatelessWidget {
 
 class ProductDetailModal extends StatelessWidget {
   final Product product;
+  final CartService cartService;
 
-  const ProductDetailModal({Key? key, required this.product}) : super(key: key);
+  const ProductDetailModal({
+    Key? key,
+    required this.product,
+    required this.cartService,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -269,12 +302,13 @@ class ProductDetailModal extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.add_shopping_cart),
                 onPressed: () {
-                  // Add to cart functionality here
+                  cartService.addProduct(
+                    product,
+                  ); // Add to cart functionality here
                 },
               ),
             ],
           ),
-
           Text(
             'Brand: ${product.brand}',
             style: TextStyle(fontSize: 16, color: Colors.grey),

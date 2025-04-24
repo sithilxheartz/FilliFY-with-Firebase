@@ -1,17 +1,16 @@
 import 'package:fillify_with_firebase/product_model.dart';
 
 class CartService {
-  // Store cart items
   List<Product> _cartItems = [];
 
   // Add product to the cart
-  void addToCart(Product product) {
+  void addProduct(Product product) {
     _cartItems.add(product);
   }
 
   // Remove product from the cart
-  void removeFromCart(Product product) {
-    _cartItems.remove(product);
+  void removeProduct(Product product) {
+    _cartItems.removeWhere((item) => item.id == product.id);
   }
 
   // Get all cart items
@@ -19,8 +18,12 @@ class CartService {
     return _cartItems;
   }
 
-  // Clear the cart
-  void clearCart() {
-    _cartItems.clear();
+  // Get total price of all products in the cart
+  double getTotalPrice() {
+    double total = 0.0;
+    for (var product in _cartItems) {
+      total += product.price * product.quantity;
+    }
+    return total;
   }
 }
