@@ -1,5 +1,6 @@
 import 'package:fillify_with_firebase/models/tank_model.dart';
 import 'package:fillify_with_firebase/service/tank_service.dart';
+import 'package:fillify_with_firebase/shared/discount_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -70,6 +71,9 @@ class _FuelStockPageState extends State<FuelStockPage> {
                           ),
                           SizedBox(height: 5),
                           Divider(),
+                          SizedBox(height: 5),
+
+                          DiscountBar(),
                           SizedBox(height: 5),
                         ],
                       ),

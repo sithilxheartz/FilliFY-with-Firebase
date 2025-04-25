@@ -71,7 +71,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Pumper Login",
+                    "Register with US",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
@@ -121,22 +121,22 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                             ? 'Please enter a valid mobile number'
                             : null,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               _isLoading
                   ? CircularProgressIndicator()
                   : CustomButton(
                     labelText: "Register",
                     onPressed: _submitRegistration,
                   ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an Account?"),
+                  Text("Already have an Account?"),
                   SizedBox(width: 5),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CustomerLoginPage(),
@@ -144,7 +144,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                       );
                     },
                     child: Text(
-                      "REGISTER",
+                      "SIGN IN",
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,

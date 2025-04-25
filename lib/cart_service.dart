@@ -1,11 +1,38 @@
-import 'package:fillify_with_firebase/oil_shop_module.dart/product_model.dart';
+import 'package:fillify_with_firebase/product_model.dart';
 
 class CartService {
   List<Product> _cartItems = [];
 
   // Add product to the cart
   void addProduct(Product product) {
-    _cartItems.add(product);
+    final index = _cartItems.indexWhere((item) => item.id == product.id);
+    if (index != -1) {
+      // If the product is already in the cart, increase the quantity
+      _cartItems[index] = Product(
+        id: _cartItems[index].id,
+        name: _cartItems[index].name,
+        description: _cartItems[index].description,
+        price: _cartItems[index].price,
+        imgUrl: _cartItems[index].imgUrl,
+        brand: _cartItems[index].brand,
+        size: _cartItems[index].size,
+        quantity: _cartItems[index].quantity + 1,
+      );
+    } else {
+      // Add new product with quantity = 1
+      _cartItems.add(
+        Product(
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          imgUrl: product.imgUrl,
+          brand: product.brand,
+          size: product.size,
+          quantity: 1,
+        ),
+      );
+    }
   }
 
   // Remove product from the cart

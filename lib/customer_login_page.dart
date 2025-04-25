@@ -1,10 +1,9 @@
-import 'package:fillify_with_firebase/cart.dart';
 import 'package:fillify_with_firebase/customer_register_page.dart';
 import 'package:fillify_with_firebase/customer_service.dart';
+import 'package:fillify_with_firebase/logged_product_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
-import 'package:fillify_with_firebase/cart_service.dart';
 
 class CustomerLoginPage extends StatefulWidget {
   @override
@@ -39,15 +38,9 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Login Successful')));
-
-          // Navigate to the CartPage after login
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder:
-                  (context) =>
-                      CartPage(cartService: CartService(), customer: customer),
-            ),
+            MaterialPageRoute(builder: (context) => LoggedProductMenu()),
           );
         }
       } catch (e) {
@@ -64,9 +57,8 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
+    return Container(
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _formKey,
@@ -75,6 +67,19 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 5),
+                  Center(
+                    child: Container(
+                      height: 5,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[400], // The notch color
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      margin: EdgeInsets.only(top: 15), // Space above the notch
+                    ),
+                  ),
+                  SizedBox(height: 20),
                   Text(
                     "Customer Login",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -98,6 +103,7 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                 //             ? 'Please enter a valid email'
                 //             : null,
               ),
+              SizedBox(height: 5),
               SignInInput(
                 heading: "Password *",
                 isPassword: true,
@@ -107,11 +113,11 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                     (value) =>
                         value!.isEmpty ? 'Please enter your password' : null,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               _isLoading
                   ? CircularProgressIndicator()
                   : CustomButton(labelText: "Login", onPressed: _submitLogin),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -119,7 +125,7 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                   SizedBox(width: 5),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CustomerRegisterPage(),
@@ -127,7 +133,7 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                       );
                     },
                     child: Text(
-                      "SIGN UP",
+                      "REGISTER",
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,

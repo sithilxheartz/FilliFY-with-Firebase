@@ -1,10 +1,10 @@
 import 'package:fillify_with_firebase/cart.dart';
-import 'package:fillify_with_firebase/customer_register_page.dart';
-import 'package:fillify_with_firebase/oil_shop_module.dart/product_model.dart';
-import 'package:fillify_with_firebase/oil_shop_module.dart/product_service.dart';
+import 'package:fillify_with_firebase/customer_login_page.dart';
+import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/product_service.dart';
 import 'package:fillify_with_firebase/cart_service.dart';
+import 'package:fillify_with_firebase/shared/discount_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/shared/custom_button.dart';
 
 class ProductMenuPage extends StatefulWidget {
   @override
@@ -53,16 +53,6 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
-          title: Text("Product Menu", style: TextStyle(fontSize: 24)),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () => _navigateToCart(context), // Navigate to CartPage
-            ),
-          ],
-        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
@@ -76,8 +66,10 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
                 "Explore our premium product range.",
                 style: TextStyle(color: Colors.white70, fontSize: 13.5),
               ),
-              SizedBox(height: 20),
-              // Search Bar
+
+              SizedBox(height: 5),
+              Divider(),
+              SizedBox(height: 10),
               TextField(
                 onChanged: _filterProducts,
                 decoration: InputDecoration(
@@ -99,6 +91,8 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
                 ),
               ),
               SizedBox(height: 20),
+              DiscountBar(),
+              SizedBox(height: 20),
               // Product Grid
               Expanded(
                 child:
@@ -110,7 +104,7 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,
-                                childAspectRatio: 0.59,
+                                childAspectRatio: 0.57,
                               ),
                           itemCount: _products.length,
                           itemBuilder: (context, index) {
@@ -136,13 +130,24 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CustomerRegisterPage()),
+            // Show Customer Login Page in a Bottom Sheet with 75% of screen height
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled:
+                  true, // Allows the bottom sheet to scroll if content exceeds height
+              builder:
+                  (context) => Container(
+                    height:
+                        MediaQuery.of(context).size.height *
+                        0.75, // 75% of screen height
+                    child:
+                        CustomerLoginPage(), // Your login page inside the modal
+                  ),
             );
           },
-          backgroundColor:
-              Colors.deepPurple, // You can change this to match your theme
+          backgroundColor: Colors.deepPurple.withOpacity(
+            0.7,
+          ), // You can change this to match your theme
           tooltip: 'Go to Cart',
           child: Icon(Icons.shopping_cart, size: 28, color: Colors.white),
         ),
@@ -347,16 +352,14 @@ class ProductDetailModal extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   elevation: 0,
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.grey.withOpacity(0.1),
                 ),
-                child: Center(
-                  child: Text(
-                    "Add to Cart",
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                child: Text(
+                  "Customer Feedbacks",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),

@@ -1,5 +1,5 @@
-import 'package:fillify_with_firebase/oil_shop_module.dart/product_model.dart';
-import 'package:fillify_with_firebase/oil_shop_module.dart/product_service.dart';
+import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart'; // Custom TextFormField
 import 'package:fillify_with_firebase/shared/custom_button.dart';
