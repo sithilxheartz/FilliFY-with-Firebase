@@ -1,12 +1,19 @@
 import 'package:fillify_with_firebase/cart.dart';
-import 'package:fillify_with_firebase/customer_login_page.dart';
 import 'package:fillify_with_firebase/product_model.dart';
 import 'package:fillify_with_firebase/product_service.dart';
 import 'package:fillify_with_firebase/cart_service.dart';
 import 'package:fillify_with_firebase/shared/discount_bar.dart';
+import 'package:fillify_with_firebase/shared/fillify_coin_bar.dart';
+import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fillify_with_firebase/customer_model.dart'; // Import the customer model
 
 class LoggedProductMenu extends StatefulWidget {
+  final Customer customer; // Accept customer data
+
+  // Modify the constructor to accept customer data
+  LoggedProductMenu({required this.customer});
+
   @override
   _ProductMenuPageState createState() => _ProductMenuPageState();
 }
@@ -44,7 +51,11 @@ class _ProductMenuPageState extends State<LoggedProductMenu> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CartPage(cartService: _cartService),
+        builder:
+            (context) => CartPage(
+              cartService: _cartService,
+              customer: widget.customer,
+            ), // Pass customer data
       ),
     );
   }
@@ -66,7 +77,6 @@ class _ProductMenuPageState extends State<LoggedProductMenu> {
                 "Explore our premium product range.",
                 style: TextStyle(color: Colors.white70, fontSize: 13.5),
               ),
-
               SizedBox(height: 5),
               Divider(),
               SizedBox(height: 10),
@@ -91,7 +101,58 @@ class _ProductMenuPageState extends State<LoggedProductMenu> {
                 ),
               ),
               SizedBox(height: 20),
-              DiscountBar(),
+              Container(
+                height: 80,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 1, color: Colors.grey),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset("assets/applogo.png"),
+                      ),
+                      SizedBox(width: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Hello ${widget.customer.name},",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            "${widget.customer.loyaltyPoints} FilliFY Coins",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amber,
+                              fontSize: 15,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+
+                          Text(
+                            "Get 10% Discounts with FilliFY Coins",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(height: 20),
               // Product Grid
               Expanded(
@@ -130,12 +191,7 @@ class _ProductMenuPageState extends State<LoggedProductMenu> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _navigateToCart(context),
-          backgroundColor: const Color.fromARGB(
-            255,
-            7,
-            210,
-            64,
-          ).withOpacity(0.7), // You can change this to match your theme
+          backgroundColor: Colors.deepPurple.withOpacity(0.7),
           tooltip: 'Go to Cart',
           child: Icon(Icons.shopping_cart, size: 28, color: Colors.white),
         ),
@@ -168,7 +224,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showProductDetails(context), // Show modal on tap
+      onTap: () => _showProductDetails(context),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 10,
@@ -221,9 +277,7 @@ class ProductCard extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.add_shopping_cart, size: 20),
                         onPressed: () {
-                          cartService.addProduct(
-                            product,
-                          ); // Add to cart functionality
+                          cartService.addProduct(product);
                         },
                       ),
                     ],
@@ -252,7 +306,7 @@ class ProductDetailModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(15.0),
-      height: MediaQuery.of(context).size.height * 0.8, // Adjust modal height
+      height: MediaQuery.of(context).size.height * 0.8,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -261,10 +315,10 @@ class ProductDetailModal extends StatelessWidget {
               height: 5,
               width: 40,
               decoration: BoxDecoration(
-                color: Colors.grey[400], // The notch color
+                color: Colors.grey[400],
                 borderRadius: BorderRadius.circular(20),
               ),
-              margin: EdgeInsets.only(top: 5), // Space above the notch
+              margin: EdgeInsets.only(top: 5),
             ),
           ),
           SizedBox(height: 15),
@@ -308,9 +362,7 @@ class ProductDetailModal extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.add_shopping_cart),
                 onPressed: () {
-                  cartService.addProduct(
-                    product,
-                  ); // Add to cart functionality here
+                  cartService.addProduct(product);
                 },
               ),
             ],
@@ -325,34 +377,6 @@ class ProductDetailModal extends StatelessWidget {
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
           SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: 20.0,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  elevation: 0,
-                  backgroundColor: Colors.grey.withOpacity(0.1),
-                ),
-                child: Text(
-                  "Customer Feedbacks",
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

@@ -32,7 +32,6 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
         email: _emailController.text,
         loyaltyPoints: 0, // New customers start with 0 points
         orderHistory: [],
-        cart: [],
         password: _passwordController.text,
         mobile: _mobileController.text,
       );
@@ -61,99 +60,105 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Register with US",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Please verify yourself before adding fuel sales.",
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  Divider(),
-                ],
-              ),
-              SignInInput(
-                heading: "Name *",
-                isPassword: false,
-                controller: _nameController,
-                labelText: "Enter your Name",
-                validator:
-                    (value) => value!.isEmpty ? 'Please enter your name' : null,
-              ),
-              SignInInput(
-                heading: "Email *",
-                isPassword: false,
-                controller: _emailController,
-                labelText: "Enter your Email",
-                validator:
-                    (value) =>
-                        value!.isEmpty || !value.contains('@')
-                            ? 'Please enter a valid email'
-                            : null,
-              ),
-              SignInInput(
-                heading: "Password *",
-                isPassword: true,
-                controller: _passwordController,
-                labelText: "Enter your Password",
-                validator:
-                    (value) =>
-                        value!.isEmpty ? 'Please enter your password' : null,
-              ),
-              SignInInput(
-                heading: "Mobile Number *",
-                isPassword: false,
-                controller: _mobileController,
-                labelText: "Enter your Mobile Number",
-                validator:
-                    (value) =>
-                        value!.isEmpty || value.length < 10
-                            ? 'Please enter a valid mobile number'
-                            : null,
-              ),
-              SizedBox(height: 15),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : CustomButton(
-                    labelText: "Register",
-                    onPressed: _submitRegistration,
-                  ),
-              SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already have an Account?"),
-                  SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomerLoginPage(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "SIGN IN",
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Register with US",
                       style: TextStyle(
-                        color: Colors.blue,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(height: 5),
+                    Text(
+                      "Please verify yourself before adding fuel sales.",
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    Divider(),
+                  ],
+                ),
+                SignInInput(
+                  heading: "Name *",
+                  isPassword: false,
+                  controller: _nameController,
+                  labelText: "Enter your Name",
+                  validator:
+                      (value) =>
+                          value!.isEmpty ? 'Please enter your name' : null,
+                ),
+                SignInInput(
+                  heading: "Email *",
+                  isPassword: false,
+                  controller: _emailController,
+                  labelText: "Enter your Email",
+                  validator:
+                      (value) =>
+                          value!.isEmpty || !value.contains('@')
+                              ? 'Please enter a valid email'
+                              : null,
+                ),
+                SignInInput(
+                  heading: "Password *",
+                  isPassword: true,
+                  controller: _passwordController,
+                  labelText: "Enter your Password",
+                  validator:
+                      (value) =>
+                          value!.isEmpty ? 'Please enter your password' : null,
+                ),
+                SignInInput(
+                  heading: "Mobile Number *",
+                  isPassword: false,
+                  controller: _mobileController,
+                  labelText: "Enter your Mobile Number",
+                  validator:
+                      (value) =>
+                          value!.isEmpty || value.length < 10
+                              ? 'Please enter a valid mobile number'
+                              : null,
+                ),
+                SizedBox(height: 15),
+                _isLoading
+                    ? CircularProgressIndicator()
+                    : CustomButton(
+                      labelText: "Register",
+                      onPressed: _submitRegistration,
+                    ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Already have an Account?"),
+                    SizedBox(width: 5),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CustomerLoginPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "SIGN IN",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

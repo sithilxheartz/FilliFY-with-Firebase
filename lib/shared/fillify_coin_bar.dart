@@ -1,15 +1,16 @@
+import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class DiscountBar extends StatelessWidget {
-  const DiscountBar({super.key});
+class FillifyCoinBar extends StatelessWidget {
+  const FillifyCoinBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: 75,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.deepPurple.withOpacity(0.2),
+        color: primaryColor.withOpacity(0.2),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(width: 1, color: Colors.grey),
       ),
@@ -25,24 +26,25 @@ class DiscountBar extends StatelessWidget {
             SizedBox(width: 15),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Shop More, Earn More",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+                SizedBox(height: 2),
                 Text(
-                  "Rs.1999+ Purchase = 10 FilliFY Coins",
+                  "Rs.1999+ Purchase = 10 FilliFY Coin",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 8),
                 ),
+                SizedBox(height: 1),
                 Text(
                   "Get 10% Discounts with FilliFY Coins",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
                 ),
               ],
             ),
-            SizedBox(width: 50),
-            Icon(Icons.arrow_forward_ios, size: 25),
+            SizedBox(width: 60),
+            Icon(Icons.discount_outlined, size: 30),
           ],
         ),
       ),

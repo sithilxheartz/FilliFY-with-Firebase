@@ -40,7 +40,12 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
           ).showSnackBar(SnackBar(content: Text('Login Successful')));
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoggedProductMenu()),
+            MaterialPageRoute(
+              builder:
+                  (context) => LoggedProductMenu(
+                    customer: customer,
+                  ), // Pass customer data here
+            ),
           );
         }
       } catch (e) {

@@ -39,16 +39,6 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
     });
   }
 
-  // Show cart page when shopping cart icon is tapped
-  void _navigateToCart(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CartPage(cartService: _cartService),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

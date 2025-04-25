@@ -4,7 +4,7 @@ class Customer {
   final String email;
   final int loyaltyPoints;
   final List<Map<String, dynamic>> orderHistory;
-  final List<Map<String, dynamic>> cart;
+
   final String password;
   final String mobile;
 
@@ -14,7 +14,7 @@ class Customer {
     required this.email,
     required this.loyaltyPoints,
     required this.orderHistory,
-    required this.cart,
+
     required this.password,
     required this.mobile,
   });
@@ -26,7 +26,7 @@ class Customer {
       email: data['email'] ?? '',
       loyaltyPoints: data['loyaltyPoints'] ?? 0,
       orderHistory: List<Map<String, dynamic>>.from(data['orderHistory'] ?? []),
-      cart: List<Map<String, dynamic>>.from(data['cart'] ?? []),
+
       password: data['password'] ?? '',
       mobile: data['mobile'] ?? '',
     );
@@ -38,7 +38,7 @@ class Customer {
       'email': email,
       'loyaltyPoints': loyaltyPoints,
       'orderHistory': orderHistory,
-      'cart': cart,
+
       'password': password,
       'mobile': mobile,
     };
