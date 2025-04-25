@@ -1,11 +1,16 @@
 import 'package:fillify_with_firebase/cart_service.dart';
-import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/customer_model.dart';
+import 'package:fillify_with_firebase/oil_shop_module.dart/product_model.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
   final CartService cartService;
 
-  const CartPage({Key? key, required this.cartService}) : super(key: key);
+  const CartPage({
+    Key? key,
+    required this.cartService,
+    required Customer customer,
+  }) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();

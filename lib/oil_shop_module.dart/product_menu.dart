@@ -1,6 +1,7 @@
 import 'package:fillify_with_firebase/cart.dart';
-import 'package:fillify_with_firebase/product_model.dart';
-import 'package:fillify_with_firebase/product_service.dart';
+import 'package:fillify_with_firebase/customer_register_page.dart';
+import 'package:fillify_with_firebase/oil_shop_module.dart/product_model.dart';
+import 'package:fillify_with_firebase/oil_shop_module.dart/product_service.dart';
 import 'package:fillify_with_firebase/cart_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
@@ -132,6 +133,18 @@ class _ProductMenuPageState extends State<ProductMenuPage> {
               ),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CustomerRegisterPage()),
+            );
+          },
+          backgroundColor:
+              Colors.deepPurple, // You can change this to match your theme
+          tooltip: 'Go to Cart',
+          child: Icon(Icons.shopping_cart, size: 28, color: Colors.white),
         ),
       ),
     );

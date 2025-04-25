@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/oil_shop_module.dart/product_model.dart';
 
 class ProductService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
