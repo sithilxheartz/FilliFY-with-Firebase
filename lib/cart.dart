@@ -47,6 +47,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body:
           _cartItems.isEmpty
               ? Center(child: Text('No products in the cart.'))

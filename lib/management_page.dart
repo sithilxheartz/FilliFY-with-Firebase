@@ -1,3 +1,4 @@
+import 'package:fillify_with_firebase/inquire_reply_page.dart';
 import 'package:fillify_with_firebase/product-add_new.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_shift.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock.dart';
@@ -46,6 +47,12 @@ class ManagementPage extends StatelessWidget {
               label: "Add New Tank (To Remove)",
               icon: Icons.oil_barrel,
               route: NewTankPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add New Tank (To Remove)",
+              icon: Icons.message,
+              route: AdminReplyPage(),
             ),
             _buildMenuButton(
               context,

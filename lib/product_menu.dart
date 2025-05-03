@@ -1,5 +1,6 @@
 import 'package:fillify_with_firebase/cart.dart';
 import 'package:fillify_with_firebase/customer_login_page.dart';
+import 'package:fillify_with_firebase/feedback_model.dart';
 import 'package:fillify_with_firebase/product_model.dart';
 import 'package:fillify_with_firebase/product_service.dart';
 import 'package:fillify_with_firebase/cart_service.dart';
@@ -240,7 +241,7 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-class ProductDetailModal extends StatelessWidget {
+class ProductDetailModal extends StatefulWidget {
   final Product product;
   final CartService cartService;
 
@@ -251,111 +252,183 @@ class ProductDetailModal extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _ProductDetailModalState createState() => _ProductDetailModalState();
+}
+
+class _ProductDetailModalState extends State<ProductDetailModal> {
+  final ProductService _productService = ProductService();
+  TextEditingController _feedbackController = TextEditingController();
+  double _rating = 1; // Initial rating (1-10)
+
+  @override
+  void dispose() {
+    _feedbackController.dispose();
+    super.dispose();
+  }
+
+  // Add feedback with rating and description to Firestore
+  void _addFeedback() async {
+    String feedback = _feedbackController.text.trim();
+    if (feedback.isNotEmpty) {
+      await _productService.addFeedback(
+        widget.product.id,
+        _rating.toInt(),
+        feedback,
+      );
+      _feedbackController.clear(); // Clear the input field
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(15.0),
       height: MediaQuery.of(context).size.height * 0.8, // Adjust modal height
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              height: 5,
-              width: 40,
-              decoration: BoxDecoration(
-                color: Colors.grey[400], // The notch color
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: EdgeInsets.only(top: 5), // Space above the notch
-            ),
-          ),
-          SizedBox(height: 15),
-          Center(
-            child: Text(
-              product.name,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(height: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.network(
-              product.imgUrl,
-              fit: BoxFit.cover,
-              height: 220,
-              width: double.infinity,
-            ),
-          ),
-          SizedBox(height: 15),
-          Text(
-            '${product.description}',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Rs. ${product.price}',
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.green,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'In Stock ${product.quantity}',
-                style: TextStyle(fontSize: 18),
-              ),
-              IconButton(
-                icon: Icon(Icons.add_shopping_cart),
-                onPressed: () {
-                  cartService.addProduct(
-                    product,
-                  ); // Add to cart functionality here
-                },
-              ),
-            ],
-          ),
-          Text(
-            'Brand: ${product.brand}',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Size: ${product.size}',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: 20.0,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  elevation: 0,
-                  backgroundColor: Colors.grey.withOpacity(0.1),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                height: 5,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(
-                  "Customer Feedbacks",
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
+                margin: EdgeInsets.only(top: 5),
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 15),
+            Center(
+              child: Text(
+                widget.product.name,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(
+                widget.product.imgUrl,
+                fit: BoxFit.cover,
+                height: 220,
+                width: double.infinity,
+              ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              '${widget.product.description}',
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Rs. ${widget.product.price}',
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'In Stock ${widget.product.quantity}',
+                  style: TextStyle(fontSize: 18),
+                ),
+                IconButton(
+                  icon: Icon(Icons.add_shopping_cart),
+                  onPressed: () {
+                    widget.cartService.addProduct(widget.product);
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 5),
+            // Display Feedback List using StreamBuilder
+            Text(
+              'Customer Feedbacks',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            Divider(),
+            SizedBox(height: 5),
+            StreamBuilder<List<Map<String, dynamic>>>(
+              stream: _productService.getFeedbacksStream(widget.product.id),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No feedbacks yet.'));
+                }
+
+                List<Map<String, dynamic>> feedbacks = snapshot.data!;
+
+                return Column(
+                  children:
+                      feedbacks.map((feedback) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.people, color: Colors.grey),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Anonymous',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 260,
+                                    child: Text(
+                                      feedback['description'],
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  // Display rating as a number
+                                  Text(
+                                    'Rating: ${feedback['rating']}/10',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
