@@ -1,7 +1,7 @@
-import 'package:fillify_with_firebase/inquire_srvice.dart';
+import 'package:fillify_with_firebase/service/inquire_srrvice.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/inquire_model.dart';
-import 'package:fillify_with_firebase/customer_model.dart'; // Customer model
+import 'package:fillify_with_firebase/models/inquire_model.dart';
+import 'package:fillify_with_firebase/models/customer_model.dart'; // Customer model
 
 class InquireDisplayPage extends StatefulWidget {
   final Customer customer; // Accept customer data

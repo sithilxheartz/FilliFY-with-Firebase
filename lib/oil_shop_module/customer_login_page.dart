@@ -1,5 +1,5 @@
-import 'package:fillify_with_firebase/customer_register_page.dart';
-import 'package:fillify_with_firebase/customer_service.dart';
+import 'package:fillify_with_firebase/oil_shop_module/customer_register_page.dart';
+import 'package:fillify_with_firebase/service/customer_service.dart';
 import 'package:fillify_with_firebase/logged_product_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';

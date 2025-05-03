@@ -1,9 +1,9 @@
 import 'package:fillify_with_firebase/cart.dart';
-import 'package:fillify_with_firebase/customer_login_page.dart';
-import 'package:fillify_with_firebase/feedback_model.dart';
-import 'package:fillify_with_firebase/product_model.dart';
-import 'package:fillify_with_firebase/product_service.dart';
-import 'package:fillify_with_firebase/cart_service.dart';
+import 'package:fillify_with_firebase/oil_shop_module/customer_login_page.dart';
+import 'package:fillify_with_firebase/models/feedback_model.dart';
+import 'package:fillify_with_firebase/models/product_model.dart';
+import 'package:fillify_with_firebase/service/product_service.dart';
+import 'package:fillify_with_firebase/service/cart_service.dart';
 import 'package:fillify_with_firebase/shared/discount_bar.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
-import 'package:fillify_with_firebase/cart_service.dart';
-import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/service/cart_service.dart';
+import 'package:fillify_with_firebase/models/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/customer_model.dart'; // Import customer model
+import 'package:fillify_with_firebase/models/customer_model.dart'; // Import customer model
 
 class CartPage extends StatefulWidget {
   final CartService cartService;

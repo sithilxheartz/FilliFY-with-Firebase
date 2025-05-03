@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fillify_with_firebase/feedback_model.dart';
-import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/models/feedback_model.dart';
+import 'package:fillify_with_firebase/models/product_model.dart';
 
 class ProductService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

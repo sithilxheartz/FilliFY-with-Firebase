@@ -1,7 +1,7 @@
-import 'package:fillify_with_firebase/customer_login_page.dart';
-import 'package:fillify_with_firebase/customer_service.dart';
+import 'package:fillify_with_firebase/oil_shop_module/customer_login_page.dart';
+import 'package:fillify_with_firebase/service/customer_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/customer_model.dart';
+import 'package:fillify_with_firebase/models/customer_model.dart';
 import 'package:fillify_with_firebase/shared/custom_button.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
 

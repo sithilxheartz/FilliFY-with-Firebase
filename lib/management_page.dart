@@ -1,5 +1,5 @@
-import 'package:fillify_with_firebase/inquire_reply_page.dart';
-import 'package:fillify_with_firebase/product-add_new.dart';
+import 'package:fillify_with_firebase/inquire_module/inquire_reply_page.dart';
+import 'package:fillify_with_firebase/oil_shop_module/product-add_new.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_shift.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_sales.dart';

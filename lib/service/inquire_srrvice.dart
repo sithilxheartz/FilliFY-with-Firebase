@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fillify_with_firebase/inquire_model.dart';
+import 'package:fillify_with_firebase/models/inquire_model.dart';
 
 class InquireService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

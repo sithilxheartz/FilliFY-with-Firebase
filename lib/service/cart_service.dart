@@ -1,4 +1,4 @@
-import 'package:fillify_with_firebase/product_model.dart';
+import 'package:fillify_with_firebase/models/product_model.dart';
 
 class CartService {
   List<Product> _cartItems = [];

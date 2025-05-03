@@ -1,5 +1,5 @@
-import 'package:fillify_with_firebase/inquire_model.dart';
-import 'package:fillify_with_firebase/inquire_srvice.dart';
+import 'package:fillify_with_firebase/models/inquire_model.dart';
+import 'package:fillify_with_firebase/service/inquire_srrvice.dart';
 import 'package:flutter/material.dart';
 
 class AdminReplyPage extends StatefulWidget {

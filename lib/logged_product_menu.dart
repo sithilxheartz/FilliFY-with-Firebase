@@ -1,10 +1,10 @@
 import 'package:fillify_with_firebase/cart.dart';
-import 'package:fillify_with_firebase/inquire_display.dart';
-import 'package:fillify_with_firebase/product_model.dart';
-import 'package:fillify_with_firebase/product_service.dart';
-import 'package:fillify_with_firebase/cart_service.dart';
+import 'package:fillify_with_firebase/inquire_module/inquire_display.dart';
+import 'package:fillify_with_firebase/models/product_model.dart';
+import 'package:fillify_with_firebase/service/product_service.dart';
+import 'package:fillify_with_firebase/service/cart_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/customer_model.dart'; // Import the customer model
+import 'package:fillify_with_firebase/models/customer_model.dart'; // Import the customer model
 
 class LoggedProductMenu extends StatefulWidget {
   final Customer customer; // Accept customer data
