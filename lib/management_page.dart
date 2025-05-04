@@ -1,5 +1,7 @@
 import 'package:fillify_with_firebase/inquire_module/inquire_reply_page.dart';
-import 'package:fillify_with_firebase/oil_shop_module/product-add_new.dart';
+import 'package:fillify_with_firebase/oil_shop_module/product_add_new.dart';
+import 'package:fillify_with_firebase/oil_shop_module/product_stock_update.dart';
+import 'package:fillify_with_firebase/report_product_orders.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_shift.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_sales.dart';
@@ -32,8 +34,8 @@ class ManagementPage extends StatelessWidget {
             ),
             _buildMenuButton(
               context,
-              label: "Add New Stock",
-              icon: Icons.add_business_outlined,
+              label: "Add Fuel Stock",
+              icon: Icons.local_gas_station,
               route: AddStockPage(),
             ),
             _buildMenuButton(
@@ -44,13 +46,19 @@ class ManagementPage extends StatelessWidget {
             ),
             _buildMenuButton(
               context,
-              label: "Add New Tank (To Remove)",
+              label: "Add Product Stock",
+              icon: Icons.shopping_cart_checkout_sharp,
+              route: ProductStockPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add New Tank",
               icon: Icons.oil_barrel,
               route: NewTankPage(),
             ),
             _buildMenuButton(
               context,
-              label: "Add New Tank (To Remove)",
+              label: "Customer Inquires",
               icon: Icons.message,
               route: AdminReplyPage(),
             ),
@@ -71,6 +79,12 @@ class ManagementPage extends StatelessWidget {
               label: "Shift Report",
               icon: Icons.bar_chart,
               route: ShiftReportPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Order Report",
+              icon: Icons.bar_chart,
+              route: OrderHistoryReportPage(),
             ),
           ],
         ),

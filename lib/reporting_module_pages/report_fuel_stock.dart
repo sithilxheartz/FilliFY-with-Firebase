@@ -317,8 +317,8 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock_service.dart';
-import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock_model.dart';
+import 'package:fillify_with_firebase/service/report_fuel_stock_service.dart';
+import 'package:fillify_with_firebase/models/report_fuel_stock_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
@@ -656,6 +656,7 @@ class _FuelStockReportPageState extends State<FuelStockReportPage> {
                     ],
                     rows: _getStockHistoryRows(stockHistory),
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

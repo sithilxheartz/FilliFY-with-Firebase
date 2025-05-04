@@ -122,4 +122,17 @@ class ProductService {
       print("Error adding feedback: $e");
     }
   }
+
+  // Update product stock
+  Future<void> updateProductStock(String productId, int newStock) async {
+    try {
+      await _firestore.collection('products').doc(productId).update({
+        'quantity': newStock,
+      });
+      print('Product stock updated for: $productId');
+    } catch (e) {
+      print("Error updating product stock: $e");
+      throw e;
+    }
+  }
 }

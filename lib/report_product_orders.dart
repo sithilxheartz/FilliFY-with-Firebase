@@ -1,28 +1,33 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import '../service/report_fuel_sales_service.dart';
-import '../models/report_fuel_sales_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
-class FuelSalesReportPage extends StatefulWidget {
+class OrderHistoryReportPage extends StatefulWidget {
   @override
-  _FuelSalesReportPageState createState() => _FuelSalesReportPageState();
+  _OrderHistoryReportPageState createState() => _OrderHistoryReportPageState();
 }
 
-class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
-  final FuelSaleService _fuelSaleService = FuelSaleService();
-  String _searchQuery = ''; // For searching/filtering sales data
+class _OrderHistoryReportPageState extends State<OrderHistoryReportPage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String _searchQuery = ''; // For searching/filtering orders
   String _selectedTimeRange = 'Last 7 Days'; // Default selected range
   DateTime? _startDate;
   DateTime? _endDate;
 
   // Fetch data stream for real-time data from the service
-  Stream<List<FuelSale>> _fetchFuelSalesData() {
-    return _fuelSaleService.getFuelSaleHistoryStream(_startDate, _endDate);
+  Stream<List<Map<String, dynamic>>> _fetchOrderHistoryData() {
+    return _firestore
+        .collection('OrderHistory')
+        .where('orderDate', isGreaterThanOrEqualTo: _startDate)
+        .where('orderDate', isLessThanOrEqualTo: _endDate)
+        .snapshots()
+        .map((querySnapshot) {
+          return querySnapshot.docs.map((doc) => doc.data()).toList();
+        });
   }
 
   // Set Date Range based on selection
@@ -46,17 +51,21 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
     });
   }
 
-  // Convert fuel type sales data into rows for the DataTable
-  List<DataRow> _getFuelSalesRows(Map<String, double> fuelTypeSales) {
+  // Convert order data into rows for the DataTable
+  List<DataRow> _getOrderHistoryRows(List<Map<String, dynamic>> orders) {
     List<DataRow> rows = [];
-    fuelTypeSales.forEach((fuelType, totalSales) {
+    orders.forEach((order) {
       rows.add(
         DataRow(
           cells: [
             DataCell(
-              Text(fuelType, style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                order['orderDate'].toDate().toString().split(' ')[0] ?? 'N/A',
+              ),
             ),
-            DataCell(Text(totalSales.toStringAsFixed(2))),
+            DataCell(Text(order['customerName'] ?? 'Unknown')),
+            DataCell(Text(order['totalPrice'].toString())),
+            DataCell(Text(order['cartItems'].length.toString() ?? '0')),
           ],
         ),
       );
@@ -64,41 +73,50 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
     return rows;
   }
 
-  // Convert the full sales data into rows for the DataTable
-  List<DataRow> _getSaleHistoryRows(List<FuelSale> salesHistory) {
-    List<DataRow> rows = [];
-    salesHistory.forEach((sale) {
-      rows.add(
-        DataRow(
-          cells: [
-            DataCell(
-              Text(sale.date.toDate().toString().split(' ')[0] ?? 'N/A'),
-            ),
-            DataCell(Text(sale.fuelType ?? 'No Fuel Type Available')),
-            DataCell(Text(sale.soldQuantity.toString())),
-            DataCell(Text(sale.pumperName ?? 'Unknown')),
-          ],
-        ),
-      );
+  // Calculate product-wise sales
+  Map<String, Map<String, double>> _getProductWiseSales(
+    List<Map<String, dynamic>> orders,
+  ) {
+    Map<String, Map<String, double>> productSales = {};
+
+    orders.forEach((order) {
+      var cartItems = order['cartItems'] as List<dynamic>;
+
+      cartItems.forEach((item) {
+        String productName = item['productName'] ?? 'Unknown Product';
+        double productPrice = item['price'] ?? 0.0;
+        int quantity = item['quantity'] ?? 0;
+
+        if (!productSales.containsKey(productName)) {
+          productSales[productName] = {'totalQuantity': 0, 'totalAmount': 0};
+        }
+
+        productSales[productName]!['totalQuantity'] =
+            (productSales[productName]!['totalQuantity'] ?? 0) + quantity;
+        productSales[productName]!['totalAmount'] =
+            (productSales[productName]!['totalAmount'] ?? 0) +
+            (productPrice * quantity);
+      });
     });
-    return rows;
+
+    return productSales;
   }
 
-  // Function to generate and download the PDF
-  Future<void> _generatePdf(
-    List<FuelSale> salesHistory,
-    Map<String, double> fuelTypeSales,
-  ) async {
+  // Generate and download the PDF
+  Future<void> _generatePdf(List<Map<String, dynamic>> orders) async {
     final pdf = pw.Document();
 
-    // Add a page to the PDF
+    Map<String, Map<String, double>> productWiseSales = _getProductWiseSales(
+      orders,
+    );
+
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              // Header Section with Modern Design
+              // Header Section
               pw.Text(
                 'FilliFY Management',
                 style: pw.TextStyle(
@@ -109,24 +127,22 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
               ),
               pw.SizedBox(height: 10),
               pw.Text(
-                'Fuel Sales Report',
+                'Oil Product Sales Report',
                 style: pw.TextStyle(
                   fontSize: 24,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
               pw.SizedBox(height: 10),
-
-              // Include selected date range filter in the PDF
               pw.Text(
                 'Date Range: $_selectedTimeRange',
                 style: pw.TextStyle(fontSize: 12, color: PdfColors.blueGrey),
               ),
               pw.SizedBox(height: 10),
 
-              // Add fuel type sales data
+              // Product-wise sales table
               pw.Text(
-                'Total Fuel Sale Quantity',
+                'Total Sold Products',
                 style: pw.TextStyle(
                   fontSize: 18,
                   fontWeight: pw.FontWeight.bold,
@@ -136,34 +152,36 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
               pw.Table.fromTextArray(
                 context: context,
                 data: [
-                  ['Fuel Type', 'Total Sales (Liters)'],
-                  ...fuelTypeSales.entries.map(
-                    (entry) => [entry.key, entry.value.toStringAsFixed(2)],
+                  ['Product', 'Total Quantity', 'Total Sales (Rs.)'],
+                  ...productWiseSales.entries.map(
+                    (entry) => [
+                      entry.key,
+                      entry.value['totalQuantity'].toString(),
+                      entry.value['totalAmount']!.toStringAsFixed(2),
+                    ],
                   ),
                 ],
               ),
               pw.SizedBox(height: 20),
-
-              // Add fuel sales history
               pw.Text(
-                'Fuel Sales History',
+                'Customer Order History',
                 style: pw.TextStyle(
                   fontSize: 18,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
-
               pw.SizedBox(height: 10),
               pw.Table.fromTextArray(
                 context: context,
                 data: [
-                  ['Date', 'Fuel Type', 'Qty', 'Pumper'],
-                  ...salesHistory.map(
-                    (sale) => [
-                      sale.date.toDate().toString().split(' ')[0] ?? 'N/A',
-                      sale.fuelType ?? 'No Fuel Type Available',
-                      sale.soldQuantity.toString(),
-                      sale.pumperName ?? 'Unknown',
+                  ['Date', 'Customer', 'Total Price', 'Items'],
+                  ...orders.map(
+                    (order) => [
+                      order['orderDate'].toDate().toString().split(' ')[0] ??
+                          'N/A',
+                      order['customerName'] ?? 'Unknown',
+                      order['totalPrice'].toString(),
+                      order['cartItems'].length.toString(),
                     ],
                   ),
                 ],
@@ -174,14 +192,12 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
       ),
     );
 
-    // Save the PDF file
     final output = await getTemporaryDirectory();
-    final file = File('${output.path}/fuel_sales_report.pdf');
-
+    final file = File('${output.path}/order_history_report.pdf');
     await file.writeAsBytes(await pdf.save());
     Printing.sharePdf(
       bytes: await pdf.save(),
-      filename: "Fuel-Sales-Report.pdf",
+      filename: "Order-History-Report.pdf",
     );
   }
 
@@ -197,31 +213,22 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Fuel Sales Report',
+          'Oil Sales Report',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
-      body: StreamBuilder<List<FuelSale>>(
-        stream: _fetchFuelSalesData(),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: _fetchOrderHistoryData(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
 
-          List<FuelSale> salesHistory = snapshot.data!;
+          List<Map<String, dynamic>> orders = snapshot.data!;
 
-          // Calculate total sales by fuel type
-          Map<String, double> fuelTypeSales = {};
-          salesHistory.forEach((sale) {
-            String fuelType = sale.fuelType ?? 'Unknown';
-            double soldQuantity = sale.soldQuantity ?? 0.0;
-
-            if (fuelTypeSales.containsKey(fuelType)) {
-              fuelTypeSales[fuelType] = fuelTypeSales[fuelType]! + soldQuantity;
-            } else {
-              fuelTypeSales[fuelType] = soldQuantity;
-            }
-          });
+          // Get product-wise sales data
+          Map<String, Map<String, double>> productWiseSales =
+              _getProductWiseSales(orders);
 
           return SingleChildScrollView(
             child: Padding(
@@ -239,9 +246,7 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
                           setState(() {
                             _selectedTimeRange = newValue!;
                           });
-                          _setDateRange(
-                            newValue!,
-                          ); // Update date range on selection
+                          _setDateRange(newValue!);
                         },
                         items:
                             <String>[
@@ -258,35 +263,57 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  // Display the total sales by fuel type
                   Text(
-                    'Total Sold Fuel Quantity',
+                    'Total Sold Products',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Divider(),
                   DataTable(
-                    columnSpacing: 20,
+                    columnSpacing: 30,
                     columns: [
                       DataColumn(
                         label: Text(
-                          'Fuel Type',
+                          'Product',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       DataColumn(
                         label: Text(
-                          'Total Sale (Rs.)',
+                          'Quantity',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Sales (Rs.)',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
-                    rows: _getFuelSalesRows(fuelTypeSales),
+                    rows:
+                        productWiseSales.entries.map((entry) {
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(entry.key)),
+                              DataCell(
+                                Text(entry.value['totalQuantity'].toString()),
+                              ),
+                              DataCell(
+                                Text(
+                                  entry.value['totalAmount']!.toStringAsFixed(
+                                    2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
                   ),
                   SizedBox(height: 10),
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        _generatePdf(salesHistory, fuelTypeSales);
+                        _generatePdf(orders);
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 20,
@@ -303,13 +330,12 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Fuel Sales History',
+                    'Customer Order History',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Divider(),
-                  // Display the fuel sales history in a DataTable
                   DataTable(
-                    columnSpacing: 20,
+                    columnSpacing: 25,
                     columns: [
                       DataColumn(
                         label: Text(
@@ -319,24 +345,24 @@ class _FuelSalesReportPageState extends State<FuelSalesReportPage> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Fuel',
+                          'Name',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       DataColumn(
                         label: Text(
-                          'Qty',
+                          'Total',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       DataColumn(
                         label: Text(
-                          'Pumper',
+                          'Items',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
-                    rows: _getSaleHistoryRows(salesHistory),
+                    rows: _getOrderHistoryRows(orders),
                   ),
                   SizedBox(height: 20),
                 ],

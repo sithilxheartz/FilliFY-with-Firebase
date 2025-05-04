@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_sales_model.dart';
+import 'package:fillify_with_firebase/models/report_fuel_sales_model.dart';
 
 class FuelSaleService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
