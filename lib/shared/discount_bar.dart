@@ -6,7 +6,7 @@ class DiscountBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: 80,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.deepPurple.withOpacity(0.2),
@@ -41,7 +41,7 @@ class DiscountBar extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(width: 50),
+            SizedBox(width: 40),
             Icon(Icons.arrow_forward_ios, size: 25),
           ],
         ),

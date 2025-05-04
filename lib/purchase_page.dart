@@ -68,7 +68,7 @@ class ProductPurchasePage extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 80,
+                      height: 90,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.2),
@@ -97,7 +97,7 @@ class ProductPurchasePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 2),
                                 Text(
-                                  "Thank You for Choosing Us",
+                                  "Thank You for Choosing Us.",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.amber,
@@ -107,7 +107,7 @@ class ProductPurchasePage extends StatelessWidget {
                                 SizedBox(height: 2),
 
                                 Text(
-                                  "Ypu Got Better Discount with FilliFY Coins",
+                                  "You Got Better Discount with FilliFY Coins.",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 10,
@@ -168,6 +168,11 @@ class ProductPurchasePage extends StatelessWidget {
               ),
               Divider(),
               // Card Details Form
+              SizedBox(height: 5),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset("assets/visalogo.png", height: 45),
+              ),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -193,6 +198,10 @@ class ProductPurchasePage extends StatelessWidget {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter Card Holder Name';
                           }
+                          // Check if the name contains only letters (optional)
+                          if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(value!)) {
+                            return 'Card Holder Name should only contain letters';
+                          }
                           return null;
                         },
                       ),
@@ -204,6 +213,10 @@ class ProductPurchasePage extends StatelessWidget {
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter Card Number';
+                          }
+                          // Check if the card number is 16 digits long
+                          if (!RegExp(r"^\d{16}$").hasMatch(value!)) {
+                            return 'Card Number must be 16 digits';
                           }
                           return null;
                         },
@@ -217,6 +230,12 @@ class ProductPurchasePage extends StatelessWidget {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter Expiry Date';
                           }
+                          // Check if the expiry date format is MM/YY
+                          if (!RegExp(
+                            r"^(0[1-9]|1[0-2])\/\d{2}$",
+                          ).hasMatch(value!)) {
+                            return 'Invalid Expiry Date format. Use MM/YY';
+                          }
                           return null;
                         },
                       ),
@@ -228,6 +247,10 @@ class ProductPurchasePage extends StatelessWidget {
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter CVV';
+                          }
+                          // CVV should be 3 digits long
+                          if (!RegExp(r"^\d{3}$").hasMatch(value!)) {
+                            return 'CVV must be 3 digits';
                           }
                           return null;
                         },
@@ -250,6 +273,10 @@ class ProductPurchasePage extends StatelessWidget {
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter Phone Number';
+                          }
+                          // Check if the phone number is valid (10 digits for example)
+                          if (!RegExp(r"^\d{10}$").hasMatch(value!)) {
+                            return 'Please enter a valid 10-digit Phone Number';
                           }
                           return null;
                         },
@@ -302,6 +329,7 @@ class ProductPurchasePage extends StatelessWidget {
                           return null;
                         },
                       ),
+
                       SizedBox(height: 20),
 
                       // Submit Button

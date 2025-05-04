@@ -1,5 +1,4 @@
-import 'package:fillify_with_firebase/admin_register_page.dart';
-import 'package:fillify_with_firebase/admin_services.dart';
+import 'package:fillify_with_firebase/service/admin_services.dart';
 import 'package:fillify_with_firebase/management_page.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
 import 'package:flutter/material.dart'; // This will be the page to redirect after successful login

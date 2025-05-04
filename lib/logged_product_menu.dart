@@ -116,7 +116,7 @@ class _ProductMenuPageState extends State<LoggedProductMenu> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 80,
+                    height: 85,
                     width: 300,
                     decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.2),
@@ -174,7 +174,7 @@ class _ProductMenuPageState extends State<LoggedProductMenu> {
                       // inqure form link to here
                     },
                     child: Container(
-                      height: 80,
+                      height: 85,
                       width: 55,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.2),

@@ -15,6 +15,8 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
+  String?
+  _errorMessage; // Variable to store error message for invalid credentials
 
   final CustomerService _customerService = CustomerService();
 
@@ -22,6 +24,7 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
+        _errorMessage = null; // Reset error message on new login attempt
       });
 
       try {
@@ -31,27 +34,33 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
         );
 
         if (customer == null) {
+          // If invalid credentials, show error message
+          setState(() {
+            _errorMessage = 'Invalid login credentials. Please Try Again';
+          });
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text('Invalid credentials')));
+          ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         } else {
+          // If login is successful, navigate to the next page
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Login Successful')));
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder:
-                  (context) => LoggedProductMenu(
-                    customer: customer,
-                  ), // Pass customer data here
+              builder: (context) => LoggedProductMenu(customer: customer),
             ),
           );
         }
       } catch (e) {
+        // Catch and display errors
+        setState(() {
+          _errorMessage = 'Error: $e';
+        });
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
       } finally {
         setState(() {
           _isLoading = false;
@@ -63,6 +72,17 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        image: DecorationImage(
+          image: AssetImage("assets/img3.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
@@ -91,7 +111,7 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "Please verify yourself before proceeding.",
+                    "Please verify yourself to enter shopping cart.",
                     style: TextStyle(color: Colors.white70),
                   ),
                   Divider(),
@@ -102,11 +122,6 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                 isPassword: false,
                 controller: _emailController,
                 labelText: "Enter your Email",
-                // validator:
-                //     (value) =>
-                //         value!.isEmpty || !value.contains('@')
-                //             ? 'Please enter a valid email'
-                //             : null,
               ),
               SizedBox(height: 5),
               SignInInput(
@@ -118,7 +133,13 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                     (value) =>
                         value!.isEmpty ? 'Please enter your password' : null,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
+
+              // Show error message if credentials are invalid
+              if (_errorMessage != null)
+                Text(_errorMessage!, style: TextStyle(color: Colors.red)),
+
+              // Display loading indicator or login button
               _isLoading
                   ? CircularProgressIndicator()
                   : CustomButton(labelText: "Login", onPressed: _submitLogin),

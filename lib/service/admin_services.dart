@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
-import 'package:fillify_with_firebase/admin_model.dart';
+import 'package:fillify_with_firebase/models/admin_model.dart';
 
 class AdminService {
   final CollectionReference adminCollection = FirebaseFirestore.instance

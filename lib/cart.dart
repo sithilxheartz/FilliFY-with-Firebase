@@ -58,7 +58,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     // New Container with loyalty points and discount information
                     Container(
-                      height: 80,
+                      height: 90,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.2),

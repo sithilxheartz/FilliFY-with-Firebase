@@ -70,6 +70,11 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset("assets/ferrari.png"),
+                    ),
+                    const SizedBox(height: 10),
                     Text(
                       "Register with US",
                       style: TextStyle(
@@ -90,42 +95,121 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                   isPassword: false,
                   controller: _nameController,
                   labelText: "Enter your Name",
-                  validator:
-                      (value) =>
-                          value!.isEmpty ? 'Please enter your name' : null,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Please enter your name';
+                    }
+                    // Check for a minimum and maximum length (e.g., between 2 and 50 characters)
+                    if ((value?.length ?? 0) < 4) {
+                      return 'Name must be at least 4 characters long';
+                    }
+                    if ((value?.length ?? 0) > 50) {
+                      return 'Name must be less than 50 characters long';
+                    }
+
+                    // Check if the username contains only letters
+                    if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value!)) {
+                      return 'Username cannot contain spaces';
+                    }
+                    return null;
+                  },
                 ),
                 SignInInput(
                   heading: "Email *",
                   isPassword: false,
                   controller: _emailController,
                   labelText: "Enter your Email",
-                  validator:
-                      (value) =>
-                          value!.isEmpty || !value.contains('@')
-                              ? 'Please enter a valid email'
-                              : null,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Please enter your email';
+                    }
+                    // Regular expression for basic email format validation
+                    final emailRegExp = RegExp(
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                    );
+
+                    // Check if the email matches the pattern
+                    if (!emailRegExp.hasMatch(value!)) {
+                      return 'Please enter a valid email address';
+                    }
+                    return null;
+                  },
                 ),
                 SignInInput(
                   heading: "Password *",
                   isPassword: true,
                   controller: _passwordController,
                   labelText: "Enter your Password",
-                  validator:
-                      (value) =>
-                          value!.isEmpty ? 'Please enter your password' : null,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Please enter your password';
+                    }
+
+                    // Check for a minimum length (e.g., 8 characters)
+                    if ((value?.length ?? 0) < 8) {
+                      return 'Password must be at least 8 characters long';
+                    }
+
+                    // Check for at least one lowercase letter
+                    if (!RegExp(r'[a-z]').hasMatch(value!)) {
+                      return 'Password must contain at least one lowercase letter';
+                    }
+
+                    // Check for at least one uppercase letter
+                    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                      return 'Password must contain at least one uppercase letter';
+                    }
+
+                    // Check for at least one digit
+                    if (!RegExp(r'\d').hasMatch(value)) {
+                      return 'Password must contain at least one digit';
+                    }
+
+                    // Check for at least one special character
+                    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                      return 'Password must contain at least one special character';
+                    }
+                    return null;
+                  },
                 ),
                 SignInInput(
                   heading: "Mobile Number *",
                   isPassword: false,
                   controller: _mobileController,
                   labelText: "Enter your Mobile Number",
-                  validator:
-                      (value) =>
-                          value!.isEmpty || value.length < 10
-                              ? 'Please enter a valid mobile number'
-                              : null,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Please enter your password';
+                    }
+
+                    // Check for a minimum length (e.g., 8 characters)
+                    if ((value?.length ?? 0) < 8) {
+                      return 'Password must be at least 8 characters long';
+                    }
+
+                    // Check for at least one lowercase letter
+                    if (!RegExp(r'[a-z]').hasMatch(value!)) {
+                      return 'Password must contain at least one lowercase letter';
+                    }
+
+                    // Check for at least one uppercase letter
+                    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                      return 'Password must contain at least one uppercase letter';
+                    }
+
+                    // Check for at least one digit
+                    if (!RegExp(r'\d').hasMatch(value)) {
+                      return 'Password must contain at least one digit';
+                    }
+
+                    // Check for at least one special character
+                    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                      return 'Password must contain at least one special character';
+                    }
+                    return null;
+                  },
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 _isLoading
                     ? CircularProgressIndicator()
                     : CustomButton(
@@ -133,30 +217,6 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                       onPressed: _submitRegistration,
                     ),
                 SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Already have an Account?"),
-                    SizedBox(width: 5),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CustomerLoginPage(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "SIGN IN",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

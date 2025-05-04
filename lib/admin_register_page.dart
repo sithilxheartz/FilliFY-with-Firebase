@@ -1,7 +1,7 @@
-import 'package:fillify_with_firebase/admin_services.dart';
+import 'package:fillify_with_firebase/service/admin_services.dart';
 import 'package:fillify_with_firebase/shared/signin_input.dart';
 import 'package:flutter/material.dart';
-import 'package:fillify_with_firebase/admin_model.dart';
+import 'package:fillify_with_firebase/models/admin_model.dart';
 import 'admin_login_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

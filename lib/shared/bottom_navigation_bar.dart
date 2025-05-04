@@ -1,7 +1,6 @@
 import 'package:fillify_with_firebase/admin_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_stock_page.dart';
-import 'package:fillify_with_firebase/management_page.dart';
 import 'package:fillify_with_firebase/oil_shop_module/product_menu.dart';
 import 'package:fillify_with_firebase/shift_module_pages/shift_view_page.dart';
 
