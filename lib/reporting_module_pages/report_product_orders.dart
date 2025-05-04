@@ -320,7 +320,7 @@ class _OrderHistoryReportPageState extends State<OrderHistoryReportPage> {
                         backgroundColor: Colors.deepPurple,
                       ),
                       child: Text(
-                        'Download Report',
+                        'Download Detailed Report',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

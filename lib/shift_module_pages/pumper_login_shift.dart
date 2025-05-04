@@ -18,10 +18,15 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
   final _userService = PumperService();
 
   bool _isLoading = false;
+  String? _errorMessage;
 
+  // Login method to validate the pumper credentials
   void _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
+      setState(() {
+        _isLoading = true;
+        _errorMessage = null; // Reset error message
+      });
 
       final user = await _userService.loginUser(
         _emailController.text.trim(),
@@ -30,7 +35,9 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
       _emailController.clear();
       _passwordController.clear();
 
-      setState(() => _isLoading = false);
+      setState(() {
+        _isLoading = false;
+      });
 
       if (user != null) {
         ScaffoldMessenger.of(
@@ -43,9 +50,13 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
           MaterialPageRoute(builder: (context) => ShiftAddPage(pumper: user)),
         );
       } else {
+        // Invalid credentials - Show error message
+        setState(() {
+          _errorMessage = "Invalid login credentials. Please Try Again";
+        });
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Invalid email or password')));
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
       }
     }
   }
@@ -105,6 +116,7 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
                 ),
               ),
 
+              // Email input field
               SignInInput(
                 heading: "Email *",
                 isPassword: false,
@@ -114,16 +126,11 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
                   if (value?.isEmpty ?? true) {
                     return 'Please enter your email';
                   }
-                  final emailRegExp = RegExp(
-                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-                  );
-
-                  if (!emailRegExp.hasMatch(value!)) {
-                    return 'Please enter a valid email address';
-                  }
                   return null;
                 },
               ),
+
+              // Password input field
               SignInInput(
                 heading: "Password *",
                 isPassword: true,
@@ -133,44 +140,21 @@ class _PumperSignInShiftsState extends State<PumperSignInShifts> {
                   if (value?.isEmpty ?? true) {
                     return 'Please enter your password';
                   }
-
-                  // Check for minimum length (e.g., 8 characters)
-                  if (value!.length < 8) {
-                    return 'Password must be at least 8 characters long';
-                  }
-
-                  // Check if the password contains at least one uppercase letter
-                  if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) {
-                    return 'Password must contain at least one uppercase letter';
-                  }
-
-                  // Check if the password contains at least one lowercase letter
-                  if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) {
-                    return 'Password must contain at least one lowercase letter';
-                  }
-
-                  // Check if the password contains at least one digit
-                  if (!RegExp(r'(?=.*[0-9])').hasMatch(value)) {
-                    return 'Password must contain at least one number';
-                  }
-
-                  // Check if the password contains at least one special character
-                  if (!RegExp(
-                    r'(?=.*[!@#$%^&*(),.?":{}|<>])',
-                  ).hasMatch(value)) {
-                    return 'Password must contain at least one special character';
-                  }
-
-                  //If all checks pass, return null (valid)
                   return null;
                 },
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
+
+              // Displaying error message if any
+              if (_errorMessage != null)
+                Text(_errorMessage!, style: TextStyle(color: Colors.red)),
+
+              // Loading indicator or login button
               _isLoading
                   ? const CircularProgressIndicator()
                   : CustomButton(
                     labelText: "Login",
-                    onPressed: () => _login(context),
+                    onPressed: () => _login(context), // Handle login
                   ),
             ],
           ),

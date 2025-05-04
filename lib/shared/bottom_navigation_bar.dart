@@ -1,3 +1,4 @@
+import 'package:fillify_with_firebase/admin_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_stock_page.dart';
 import 'package:fillify_with_firebase/management_page.dart';
@@ -21,7 +22,7 @@ class _HomeBarState extends State<HomeBar> with SingleTickerProviderStateMixin {
     ProductMenuPage(),
     FuelStockPage(), // No const here, dynamic widget
     ShiftPage(),
-    ManagementPage(),
+    AdminLoginPage(),
   ];
 
   final List<IconData> icons = [

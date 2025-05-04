@@ -1,12 +1,12 @@
+import 'package:fillify_with_firebase/admin_register_page.dart';
 import 'package:fillify_with_firebase/inquire_module/inquire_reply_page.dart';
 import 'package:fillify_with_firebase/oil_shop_module/product_add_new.dart';
 import 'package:fillify_with_firebase/oil_shop_module/product_stock_update.dart';
-import 'package:fillify_with_firebase/report_product_orders.dart';
+import 'package:fillify_with_firebase/reporting_module_pages/report_product_orders.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_shift.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_stock.dart';
 import 'package:fillify_with_firebase/reporting_module_pages/report_fuel_sales.dart';
 import 'package:fillify_with_firebase/shift_module_pages/pumper_register_page.dart';
-import 'package:fillify_with_firebase/fuel_stock_module_pages/tank_add_new.dart';
 import 'package:fillify_with_firebase/fuel_stock_module_pages/fuel_add_stock.dart';
 import 'package:fillify_with_firebase/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,13 @@ class ManagementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("management_page")),
+      appBar: AppBar(
+        title: Text(
+          "FilliFY Management",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: GridView.count(
@@ -28,45 +34,15 @@ class ManagementPage extends StatelessWidget {
           children: [
             _buildMenuButton(
               context,
-              label: "Add New Pumper",
-              icon: Icons.person_add,
-              route: PumperRegisterPage(),
-            ),
-            _buildMenuButton(
-              context,
-              label: "Add Fuel Stock",
-              icon: Icons.local_gas_station,
-              route: AddStockPage(),
-            ),
-            _buildMenuButton(
-              context,
-              label: "Add New Product",
-              icon: Icons.add_business_outlined,
-              route: AddProductPage(),
-            ),
-            _buildMenuButton(
-              context,
-              label: "Add Product Stock",
-              icon: Icons.shopping_cart_checkout_sharp,
-              route: ProductStockPage(),
-            ),
-            _buildMenuButton(
-              context,
-              label: "Add New Tank",
-              icon: Icons.oil_barrel,
-              route: NewTankPage(),
-            ),
-            _buildMenuButton(
-              context,
-              label: "Customer Inquires",
-              icon: Icons.message,
-              route: AdminReplyPage(),
-            ),
-            _buildMenuButton(
-              context,
               label: "Fuel Sales Report",
               icon: Icons.bar_chart,
               route: FuelSalesReportPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Order Report",
+              icon: Icons.bar_chart,
+              route: OrderHistoryReportPage(),
             ),
             _buildMenuButton(
               context,
@@ -80,11 +56,49 @@ class ManagementPage extends StatelessWidget {
               icon: Icons.bar_chart,
               route: ShiftReportPage(),
             ),
+
             _buildMenuButton(
               context,
-              label: "Order Report",
-              icon: Icons.bar_chart,
-              route: OrderHistoryReportPage(),
+              label: "Add Fuel Stock",
+              icon: Icons.local_gas_station,
+              route: AddStockPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add Product Stock",
+              icon: Icons.add_shopping_cart_sharp,
+              route: ProductStockPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add New Product",
+              icon: Icons.add_business_outlined,
+              route: AddProductPage(),
+            ),
+
+            // _buildMenuButton(
+            //   context,
+            //   label: "Add New Tank",
+            //   icon: Icons.oil_barrel,
+            //   route: NewTankPage(),
+            // ),
+            _buildMenuButton(
+              context,
+              label: "Customer Inquires",
+              icon: Icons.message,
+              route: AdminReplyPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add New Admin",
+              icon: Icons.person_add,
+              route: AdminRegisterPage(),
+            ),
+            _buildMenuButton(
+              context,
+              label: "Add New Pumper",
+              icon: Icons.person_add,
+              route: PumperRegisterPage(),
             ),
           ],
         ),
