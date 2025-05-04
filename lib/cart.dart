@@ -1,3 +1,4 @@
+import 'package:fillify_with_firebase/checkout_page.dart';
 import 'package:fillify_with_firebase/service/cart_service.dart';
 import 'package:fillify_with_firebase/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -201,7 +202,17 @@ class _CartPageState extends State<CartPage> {
                           padding: EdgeInsets.all(8),
                           child: ElevatedButton(
                             onPressed: () {
-                              // Checkout functionality goes here
+                              // Navigate to the Checkout Page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => CheckoutPage(
+                                        cartService: widget.cartService,
+                                        customer: widget.customer,
+                                      ),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
@@ -217,7 +228,7 @@ class _CartPageState extends State<CartPage> {
                               ),
                             ),
                             child: Text(
-                              'Checkout',
+                              'Place Order',
                               style: const TextStyle(
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.bold,

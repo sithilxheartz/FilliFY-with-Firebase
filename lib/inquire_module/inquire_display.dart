@@ -44,7 +44,7 @@ class _InquireDisplayPageState extends State<InquireDisplayPage> {
             TextField(
               controller: _inquiryController,
               decoration: InputDecoration(
-                labelText: 'Enter your inquiry',
+                labelText: ' Enter your inquiry',
                 border: OutlineInputBorder(),
               ),
               maxLines: 4,
