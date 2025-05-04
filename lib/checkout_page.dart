@@ -1,6 +1,7 @@
 import 'package:fillify_with_firebase/purchase_page.dart';
 import 'package:fillify_with_firebase/service/cart_service.dart';
 import 'package:fillify_with_firebase/models/product_model.dart';
+import 'package:fillify_with_firebase/service/customer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fillify_with_firebase/models/customer_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +25,7 @@ class CheckoutPage extends StatelessWidget {
     return total - discount;
   }
 
-  // Function to save order in Firestore
+  // Function to save order and update stock
   Future<void> _saveOrderToFirestore(List<Product> cartItems) async {
     double totalPrice = _calculateTotal(cartItems);
 
@@ -41,12 +42,58 @@ class CheckoutPage extends StatelessWidget {
             };
           }).toList(),
       'totalPrice': totalPrice,
-      'status': 'pending', // Initially, status is 'pending'
-      'orderDate': FieldValue.serverTimestamp(), // Timestamp of order
+      'status': 'pending', // Order status is initially pending
+      'orderDate': FieldValue.serverTimestamp(), // Order timestamp
     };
 
     // Add order to Firestore collection "OrderHistory"
     await FirebaseFirestore.instance.collection('OrderHistory').add(orderData);
+
+    // Update stock for each product in the cart
+    for (var item in cartItems) {
+      await _updateProductStock(item); // Reduce the stock based on quantity
+    }
+    // Reset loyalty points to 0 after the order is placed
+    await CustomerService().resetLoyaltyPoints(customer.id);
+  }
+
+  // Function to update product stock in Firestore by reducing quantity
+  Future<void> _updateProductStock(Product product) async {
+    try {
+      // Get the current stock of the product from Firestore
+      DocumentSnapshot productSnapshot =
+          await FirebaseFirestore.instance
+              .collection('products')
+              .doc(
+                product.id,
+              ) // Using the product ID to get the correct document
+              .get();
+
+      int currentStock =
+          productSnapshot['quantity'] ?? 0; // Current stock in Firestore
+
+      // Ensure stock is not negative
+      if (currentStock > 0) {
+        int newStock =
+            currentStock -
+            product.quantity; // Reduce stock by the quantity in cart
+        if (newStock < 0) newStock = 0; // Ensure stock doesn't go negative
+
+        // Update the stock in Firestore
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(product.id)
+            .update({'quantity': newStock});
+
+        print(
+          "Product stock updated for: ${product.name}, new stock: $newStock",
+        );
+      } else {
+        print("Insufficient stock for: ${product.name}");
+      }
+    } catch (e) {
+      print("Error updating product stock: $e");
+    }
   }
 
   @override

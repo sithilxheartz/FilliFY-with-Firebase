@@ -123,16 +123,50 @@ class ProductPurchasePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 15),
-
+              Divider(),
               // Show customer name and total price
-              Text(
-                'Total Price: Rs. $totalPrice', // Display total price
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.green.withOpacity(0.8),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Order No:', // Display total price
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    'VGHB16364ASVQYV1', // Display total price
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
               ),
-
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Customer Name:', // Display total price
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    '$customerName', // Display total price
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total Price: ', // Display total price
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    'Rs. $totalPrice', // Display total price
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              Divider(),
               // Card Details Form
               Form(
                 key: _formKey,
@@ -284,7 +318,7 @@ class ProductPurchasePage extends StatelessWidget {
                           backgroundColor: Colors.deepPurple.withOpacity(0.7),
                         ),
                         child: Text(
-                          'Proceed to Payment',
+                          'Confirm Payment',
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
@@ -292,6 +326,7 @@ class ProductPurchasePage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(height: 40),
                     ],
                   ),
                 ),

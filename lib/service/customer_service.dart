@@ -34,4 +34,16 @@ class CustomerService {
       throw e;
     }
   }
+
+  // Update customer loyalty points to 0 after the order is placed
+  Future<void> resetLoyaltyPoints(String customerId) async {
+    try {
+      await _firestore.collection('customers').doc(customerId).update({
+        'loyaltyPoints': 0, // Set loyalty points to 0
+      });
+      print("Loyalty points reset to 0 for customer: $customerId");
+    } catch (e) {
+      print("Error resetting loyalty points: $e");
+    }
+  }
 }
