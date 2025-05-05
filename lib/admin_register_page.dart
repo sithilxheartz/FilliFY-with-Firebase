@@ -55,10 +55,6 @@ class _AdminRegisterPageState extends State<AdminRegisterPage> {
       await _adminService.addToAdminCollection(admin);
 
       Fluttertoast.showToast(msg: "Registration successful.");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => AdminLoginPage()),
-      );
     } catch (e) {
       Fluttertoast.showToast(msg: "Error occurred during registration.");
     } finally {
@@ -144,7 +140,7 @@ class _AdminRegisterPageState extends State<AdminRegisterPage> {
                   heading: "Password*",
                   controller: _passwordController,
                   labelText: "Enter your password",
-                  isPassword: false,
+                  isPassword: true,
                   validator: (value) {
                     if (value?.isEmpty ?? true) {
                       return 'Please enter your password';
@@ -181,7 +177,7 @@ class _AdminRegisterPageState extends State<AdminRegisterPage> {
                   heading: "Confirm Password*",
                   controller: _confirmPasswordController,
                   labelText: "Confirm your password",
-                  isPassword: false,
+                  isPassword: true,
                   validator: (value) {
                     if (value?.isEmpty ?? true) {
                       return 'Please enter your password';
