@@ -122,6 +122,12 @@ class _CustomerLoginPageState extends State<CustomerLoginPage> {
                 isPassword: false,
                 controller: _emailController,
                 labelText: "Enter your Email",
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 5),
               SignInInput(
