@@ -1,4 +1,4 @@
-# 📱 FilliFy – Filling Station Management App
+# 📱 FilliFy – Filling Station Management App (Business Project)
 
 FilliFy is a smart and modern mobile application designed to streamline operations at fuel stations. From real-time fuel tracking to pumper shift management and online oil shop access — it's your all-in-one solution for efficient filling station management.
 
