@@ -26,11 +26,21 @@ FilliFy is a smart and modern mobile application designed to streamline operatio
 
 ## 📸 Previews
 
-![Main UI](FilliFyBanners/2.png)
+![Preview 1](FilliFyBanners/2.png)  
+---  
+![Preview 2](FilliFyBanners/3.png)  
+---  
+![Preview 3](FilliFyBanners/4.png)  
+---  
+![Preview 4](FilliFyBanners/5.png)
+
 ---
-![Main UI](FilliFyBanners/3.png)
+
+## 📬 Contact Me
+
+For more information, feedback, or collaboration:
+
+🔗 [Connect on LinkedIn](https://www.linkedin.com/in/sithilxheartz/)
+
 ---
-![Main UI](FilliFyBanners/4.png)
----
-![Main UI](FilliFyBanners/5.png)
----
+
