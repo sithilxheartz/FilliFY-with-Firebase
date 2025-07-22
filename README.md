@@ -26,10 +26,15 @@ FilliFy is a smart and modern mobile application designed to streamline operatio
 
 ## 📸 Previews
 
-| 🔐 Logins | 📊 Dashboard | 👤 Oil Shop |
-|:--:|:--:|:--:|
-| ![Login](FilliFyBanners/1.png) | ![Dashboard](FilliFyBanners/1.png) | ![Profile](FilliFyBanners/1.png) |
-
+![Main UI](FilliFyBanners/1.png)
+---
+![Main UI](FilliFyBanners/2.png)
+---
+![Main UI](FilliFyBanners/3.png)
+---
+![Main UI](FilliFyBanners/4.png)
+---
+![Main UI](FilliFyBanners/5.png)
 ---
 
 ## ⚙️ Installation Guide
