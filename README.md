@@ -26,8 +26,6 @@ FilliFy is a smart and modern mobile application designed to streamline operatio
 
 ## 📸 Previews
 
-![Main UI](FilliFyBanners/1.png)
----
 ![Main UI](FilliFyBanners/2.png)
 ---
 ![Main UI](FilliFyBanners/3.png)
