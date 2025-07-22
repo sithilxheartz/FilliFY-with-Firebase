@@ -26,25 +26,21 @@ FilliFy is a smart and modern mobile application designed to streamline operatio
 
 ## 📸 Previews
 
-| 🔐 Logins | 📊 Dashboard | 👤 Oil Shop |
-|:--:|:--:|:--:|
-| ![Login](FilliFyBanners/1.png) | ![Dashboard](FilliFyBanners/1.png) | ![Profile](FilliFyBanners/1.png) |
+![Preview 1](FilliFyBanners/2.png)  
+---  
+![Preview 2](FilliFyBanners/3.png)  
+---  
+![Preview 3](FilliFyBanners/4.png)  
+---  
+![Preview 4](FilliFyBanners/5.png)
 
 ---
 
-## ⚙️ Installation Guide
+## 📬 Contact Me
 
-To run the app locally, follow these steps:
+For more information, feedback, or collaboration:
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/fillify.git
+🔗 [Connect on LinkedIn](https://www.linkedin.com/in/sithilxheartz/)
 
-# Navigate into the project directory
-cd fillify
+---
 
-# Fetch project dependencies
-flutter pub get
-
-# Launch the app on emulator/device
-flutter run
