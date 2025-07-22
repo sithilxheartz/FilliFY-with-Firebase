@@ -1,16 +1,50 @@
-# fillify_with_firebase
+# 📱 FilliFy – Filling Station Management App
 
-A new Flutter project.
+FilliFy is a smart and modern mobile application designed to streamline operations at fuel stations. From real-time fuel tracking to pumper shift management and online oil shop access — it's your all-in-one solution for efficient filling station management.
 
-## Getting Started
+![Main UI](FilliFyBanners/1.png)
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Key Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+✅ **User-Specific Secure Logins**  
+✅ **Real-Time Fuel Monitoring**  
+✅ **Pumper Shift Management**  
+✅ **Integrated Online Oil Shop**  
+✅ **Dark Mode Interface**  
+✅ **Downloadable Analytical Reports**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🛠 Tech Stack
+
+- 💙 **Flutter 3.10** – Cross-platform mobile framework  
+- 🔥 **Firebase Firestore** – Cloud database & real-time sync  
+
+---
+
+## 📸 Previews
+
+| 🔐 Logins | 📊 Dashboard | 👤 Oil Shop |
+|:--:|:--:|:--:|
+| ![Login](FilliFyBanners/1.png) | ![Dashboard](FilliFyBanners/1.png) | ![Profile](FilliFyBanners/1.png) |
+
+---
+
+## ⚙️ Installation Guide
+
+To run the app locally, follow these steps:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/fillify.git
+
+# Navigate into the project directory
+cd fillify
+
+# Fetch project dependencies
+flutter pub get
+
+# Launch the app on emulator/device
+flutter run
