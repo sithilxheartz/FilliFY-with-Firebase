@@ -41,7 +41,7 @@ To run the app locally, follow these steps:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/fillify.git
+git clone "repository-url"
 
 # Navigate into the project directory
 cd fillify
